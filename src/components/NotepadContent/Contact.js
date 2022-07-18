@@ -10,7 +10,11 @@ const StyledItem = styled.li`
     font-size: 20px;
     margin-left: 10px;
 `
-
+const StyledList = styled.ul`
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+`
 const StyledLink = styled.a`
     color: black;
 `
@@ -23,20 +27,20 @@ function Contact({ content }) {
       <h2>Let's have a chat!</h2>
       <p>{emailText}<a href={mailto}>{email}</a></p>
       <p>{socialText}</p>
-      <ul>
+      <StyledList>
         {
           social.map((s, idx) => {
             const Icon = Icons[s.name];
             return (
               <StyledItem key={idx}>
-                <StyledLink href={s.link} target="_blank" rel="noopener noreferrer">
+                <StyledLink class="pointer" href={s.link} target="_blank" rel="noopener noreferrer">
                   <Icon />
                 </StyledLink>
               </StyledItem>
             );
           })
         }
-      </ul>
+      </StyledList>
     </div>
   )
 }
