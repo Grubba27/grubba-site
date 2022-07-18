@@ -6,7 +6,7 @@ export const contact = {
     emailText:
       'Contact me on this email if you need!',
     email: 'grubba27@hotmail.com',
-    socialText: 'Or you can reach me out through social media:',
+    socialText: 'Or you can reach me out through social media: ',
     social: [
       {
         name: 'FaLinkedin',
