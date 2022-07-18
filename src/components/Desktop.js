@@ -3,7 +3,6 @@ import Explorer from './Explorer'
 import Notepad from './Notepad';
 import Shortcuts from './Shortcuts';
 import { Context } from "../services/data";
-
 function Desktop() {
 
   const isMobile = window.innerWidth < 850;
@@ -20,7 +19,7 @@ function Desktop() {
       setItems(files);
       toggleExplorer(true);
       setSelectedItem(files[0]);
-      toggleNotepad(!isMobile);
+      toggleNotepad(true);
     }, [data, isMobile]);
 
 

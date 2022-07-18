@@ -1,8 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 
 
-function Skills({ content, isMobile }) {
+function Blog({ content, isMobile }) {
   const { blog } = content;
   return (
     <div>
@@ -13,4 +12,4 @@ function Skills({ content, isMobile }) {
   )
 }
 
-export default Skills
+export default Blog

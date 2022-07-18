@@ -7,7 +7,8 @@ import Taskbar from "./Taskbar";
 
 const BodyFontSizeOverride = createGlobalStyle`
   body {
-    font-size: 15px
+    font-size: 15px;
+    background: url("./assets/bg-hg.jpeg") no-repeat center center fixed;
   }
 `;
 const dataService = Data();

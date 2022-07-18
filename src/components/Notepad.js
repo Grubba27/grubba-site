@@ -1,17 +1,16 @@
 import React from 'react'
 import { Modal, Frame } from '@react95/core'
 import ContentFactory from './NotepadContent/ContentFactory';
-import {Notepad as NotepadIcon} from '@react95/icons'
 function Notepad({ closeNotepad, selectedItem, isMobile }) {
   return (
     <Modal
-      icon={NotepadIcon}
+      icon="notepad_1_16x16_4bit"
       title={`Notepad - ${selectedItem.name}`}
       closeModal={closeNotepad}
       buttons={[{ value: "Close", onClick: closeNotepad }]}
       style={{
         left: isMobile ? '5%' : '50%',
-        top: isMobile ? '3%' : '15%',
+        top: isMobile ? '40%' : '15%',
         width: isMobile ? '90%' : 450,
       }}
       menu={[
