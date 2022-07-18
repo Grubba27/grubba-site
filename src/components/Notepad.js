@@ -10,7 +10,7 @@ function Notepad({ closeNotepad, selectedItem, isMobile }) {
       buttons={[{ value: "Close", onClick: closeNotepad }]}
       style={{
         left: isMobile ? '5%' : '50%',
-        top: isMobile ? '30%' : '15%',
+        top: isMobile ? '35%' : '15%',
         width: isMobile ? '90%' : 450,
       }}
       menu={[
