@@ -11,7 +11,8 @@ const Data = () => {
     about,
     resume,
     contact,
-    projects
+    projects,
+    blog
   ];
   const getItems = () =>
     items.map(({ id, name, icon }) => ({ id, name, icon }));
