@@ -9,6 +9,7 @@ const BodyFontSizeOverride = createGlobalStyle`
   body {
     font-size: 15px;
     background: url("./assets/bg-hg.jpeg") no-repeat center center fixed;
+    background-size: cover;
   }
 `;
 const dataService = Data();

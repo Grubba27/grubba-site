@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Inetcfg2301, FlyingThroughSpace100, Notepad2, InfoBubble, Progman11} from '@react95/icons'
+import {Inetcfg2301, FlyingThroughSpace100, Notepad2, InfoBubble, Progman1} from '@react95/icons'
 
 const StyledItem = styled.div`
 	display: flex;
@@ -27,7 +27,7 @@ const getIcon = (icon) => {
     case 'info_bubble':
       return InfoBubble
     case 'progman_11':
-      return Progman11
+      return Progman1
     default:
       return Inetcfg2301 
   }
