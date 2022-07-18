@@ -17,9 +17,9 @@ function Explorer({ items, closeExplorer, openNotepad, isMobile }) {
       title="Explorer"
       closeModal={closeExplorer}
       style={{
-        left: isMobile ? '5%' : '15%',
-        top:  isMobile ? '10%' : '30%',
-        width: isMobile ? '90%' : 400,
+        left: isMobile ? '20%' : '15%',
+        top:  isMobile ? '2%' : '30%',
+        width: isMobile ? '78%' : 400,
       }}
       menu={[
         { name: 'File', list: [] },
