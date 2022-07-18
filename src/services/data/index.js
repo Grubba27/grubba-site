@@ -3,6 +3,7 @@ import { resume } from "./resume";
 import { contact } from "./contact";
 import { projects } from "./projects";
 import { createContext } from 'react';
+import { blog } from "./blog";
 const Data = () => {
   const projectRepo = 'https://github.com/Grubba27/grubba-site-meteor';
   const react95Repo = 'https://github.com/React95/React95';
