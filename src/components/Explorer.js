@@ -18,7 +18,7 @@ function Explorer({ items, closeExplorer, openNotepad, isMobile }) {
       closeModal={closeExplorer}
       style={{
         left: isMobile ? '5%' : '15%',
-        top:  isMobile ? '20%' : '30%',
+        top:  isMobile ? '10%' : '30%',
         width: isMobile ? '90%' : 400,
       }}
       menu={[
