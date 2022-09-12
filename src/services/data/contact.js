@@ -22,7 +22,7 @@ export const contact = {
       },
       {
         name: 'FaTwitter',
-        link: 'https://twitter.com/que_cara_legal',
+        link: 'https://twitter.com/gab_grubba',
       },
     ],
   },
