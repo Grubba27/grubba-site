@@ -33,7 +33,6 @@ export const resume = {
         period: 'JUL 2021 – AUG 2021',
         accomplishments: [
           'Creation of their website using NEXT.js',
-          'Maintenance of other company projects in React Native',
           'Creation of automation scripts using PHP',
           'Technologies used: Next.js, React, MySQL, PHP',
         ],
