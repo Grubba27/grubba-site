@@ -4,6 +4,7 @@ import { createGlobalStyle } from "styled-components";
 import { GlobalStyle, ThemeProvider } from "@react95/core";
 import Desktop from "./Desktop";
 import Taskbar from "./Taskbar";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const BodyFontSizeOverride = createGlobalStyle`
   body {
@@ -13,16 +14,20 @@ const BodyFontSizeOverride = createGlobalStyle`
   }
 `;
 const dataService = Data();
+const queryClient = new QueryClient();
 
 const App = () => (
-  <Context.Provider value={dataService}>
-    <ThemeProvider>
-      <GlobalStyle/>
-      <BodyFontSizeOverride/>
+  <QueryClientProvider client={ queryClient }>
+    <Context.Provider value={ dataService }>
+      <ThemeProvider>
+        <GlobalStyle/>
+        <BodyFontSizeOverride/>
 
-      <Desktop/>
-      <Taskbar/>
-    </ThemeProvider>
-  </Context.Provider>
+        <Desktop/>
+        <Taskbar/>
+      </ThemeProvider>
+    </Context.Provider>
+  </QueryClientProvider>
+
 );
 export default App;
