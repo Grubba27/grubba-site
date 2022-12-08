@@ -11,7 +11,15 @@ export const resume = {
         company: 'Meteor.js',
         location: 'Global',
         period: 'AUG 2022 – Now',
-        accomplishments: [],
+        accomplishments: [
+          'Created content for the Meteor Guide, new Meteor tutorials, and the Meteor blog.',
+          'Maintain Meteor.js core packages',
+          'Maintain Meteor.js documentation',
+          'Helped in Fibers migration',
+          'Created new Meteor.js features such as the CLI API and the better error messages',
+          'Upgraded and maintained React and React Native packages',
+          'Technologies used: Meteor.js, Svelte, React , MongoDB, Node.js',
+        ],
       },
       {
         jobTitle: 'Software Engineer',
@@ -23,7 +31,7 @@ export const resume = {
           'Creation and maintenance of CLIs for increasing developer performance and experience in the project',
           'Creation and maintenance of APIs made in Node.JS and C#',
           'Training, onboard, and mentoring colleagues in the project',
-          'Technologies used: Angular, TypeScript, Mongo, Node.js, C#, Azure',
+          'Technologies used: Angular, TypeScript, MongoDB, Node.js, C#, Azure',
         ],
       },
       {
