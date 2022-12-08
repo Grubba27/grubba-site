@@ -33,7 +33,7 @@ function Contact({ content }) {
             const Icon = Icons[s.name];
             return (
               <StyledItem key={idx}>
-                <StyledLink class="pointer" href={s.link} target="_blank" rel="noopener noreferrer">
+                <StyledLink className="pointer" href={s.link} target="_blank" rel="noopener noreferrer">
                   <Icon />
                 </StyledLink>
               </StyledItem>
