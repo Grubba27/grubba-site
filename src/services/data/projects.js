@@ -7,26 +7,10 @@ export const projects = {
       {
         title: 'Cat Lang',
         description:
-          'A interpreter made in Go, based on the book "Writing an Interpreter in Go"',
+          'A interpreter made in Go',
         techStack:
           'Go',
         url: 'https://github.com/Grubba27/cat-lang',
-      },
-      {
-        title: 'write yourself a scheme in Go',
-        description:
-          'A scheme interpreter made in Go',
-        techStack:
-          'Go',
-        url: 'https://github.com/Grubba27/write-yourself-a-scheme',
-      },
-      {
-        title: 'Golings website',
-        description:
-          'Golings website',
-        techStack:
-          'Go',
-        url: 'https://golings.vercel.app/',
       },
       {
         title: 'Meteor SDK',
