@@ -7,7 +7,7 @@ function SponsorButton() {
       title="Sponsor Grubba27"
       height="32"
       width="114"
-      style="border: 0; border-radius: 6px;"
+      style={{ border: 0, borderRadius: 6 }}
     ></iframe>
   );
 }
@@ -16,10 +16,11 @@ function About({ content }) {
   const { paragraphs } = content;
   return (
     <div>
-      <h2>About</h2> - <SponsorButton />
+      <h2>About </h2> 
       {paragraphs.map((p, i) => (
         <p key={i}>{p}</p>
       ))}
+      <SponsorButton />
     </div>
   );
 }
