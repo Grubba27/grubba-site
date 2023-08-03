@@ -4,7 +4,7 @@ export const resume = {
   icon: 'notepad_2',
   content: {
     resumeLink:
-      'https://docs.google.com/document/d/1r_8N92ssydVa09rxI0yeWkXcxH3NEFWoyKIoPHmElNs/export?format=pdf',
+      'https://docs.google.com/document/d/1KwEsBgqJviQnK35mZrhA-rsu4rVaQD6aLjK8G6PE8WM/export?format=pdf',
     workExperience: [
       {
         jobTitle: 'OSS Maintainer',
