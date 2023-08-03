@@ -29,7 +29,7 @@ export default function BlogList() {
   return (
     <ul
       style={{
-        padding: "1rem",
+        paddingLeft: "1rem",
       }}
     >
       {dataList.map(
