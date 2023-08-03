@@ -26,20 +26,26 @@ export default function BlogList() {
         readable_publish_date,
       })
     )
-  console.log(dataList);
   return (
-    <ul>
-      { dataList.map(({ id, title, path, reading_time, readable_publish_date }) => (
-        <li key={ id }>
-          <h3>
-            { title } - { readable_publish_date }
-          </h3>
-          <p>Reading time: { reading_time } minutes. <a href={ `https://dev.to${ path }` }>Link</a></p>
-
-        </li>
-      )) }
-
+    <ul
+      style={{
+        padding: "1rem",
+      }}
+    >
+      {dataList.map(
+        ({ id, title, path, reading_time, readable_publish_date }) => (
+          <li key={id}>
+            <h3>
+              {title} - {readable_publish_date}
+            </h3>
+            <p>
+              Reading time: {reading_time} minutes.{" "}
+              <a href={`https://dev.to${path}`}>Link</a>
+            </p>
+          </li>
+        )
+      )}
     </ul>
-  )
+  );
 
 }
