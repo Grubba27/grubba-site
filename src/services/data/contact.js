@@ -18,7 +18,7 @@ export const contact = {
       },
       {
         name: 'FaInstagram',
-        link: 'https://www.instagram.com/ggrubba/',
+        link: 'https://www.instagram.com/gabriel.grubba/',
       },
       {
         name: 'FaTwitter',
