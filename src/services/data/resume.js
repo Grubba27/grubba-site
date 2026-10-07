@@ -12,8 +12,8 @@ export const resume = {
         location: "Remote",
         period: "APR 2024 – Present",
         accomplishments: [
-          "Spearheaded the admin helper agent, an AI agent for Discourse admins",
-          "Helped build the new voice and live video features",
+          "Spearheaded the Admin Helper Agent, an AI agent for Discourse admins",
+          "Helped build the new Live video and voice features",
           "Build plugins for Discourse following Ruby on Rails best practices",
           "Talk with customers and colleagues to deliver the best possible experience for our users and for plugin developers",
           "Write test suites with RSpec and Capybara",
