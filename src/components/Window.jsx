@@ -65,11 +65,20 @@ const Buttons = styled.div`
   }
 `;
 
+// The drag library swallows the next click after a drag, meant for the one a mouse fires on release.
+// A touch drag isn't followed by a click, so the next tap would be lost: hand it one right away.
+const dragOptions = {
+  onDragEnd: ({ event }) => {
+    if (event.pointerType !== 'mouse') window.dispatchEvent(new MouseEvent('click'));
+  },
+};
+
 function Window({ icon, title, closeModal, buttons = [], menu, style, children }) {
   return (
     <StyledModal
       icon={icon}
       title={title}
+      dragOptions={dragOptions}
       titleBarOptions={[
         <TitleBar.Option key="help">?</TitleBar.Option>,
         <TitleBar.Option key="close" onClick={closeModal}>x</TitleBar.Option>,
