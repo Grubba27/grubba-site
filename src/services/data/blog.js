@@ -3,6 +3,7 @@ export const blog = {
   name: 'Blog.txt',
   icon: 'progman_11',
   content: {
-    blog:'https://dev.to/grubba'
+    blog:'https://dev.to/grubba',
+    username: 'grubba',
   },
 }
