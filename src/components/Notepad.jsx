@@ -24,6 +24,8 @@ function Notepad({ closeNotepad, selectedItem, isMobile }) {
         { name: 'Edit', list: [] }
       ] }>
       <Frame
+        // a new frame per file, so each one opens at the top instead of where the last one was scrolled to
+        key={ selectedItem.id }
         bg="white"
         boxShadow="$in"
         height="100%"
