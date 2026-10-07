@@ -1,8 +1,7 @@
-import React from 'react'
 import BlogList from "./BlogList";
 
 
-function Blog({ content, isMobile }) {
+function Blog({ content }) {
   const { blog } = content;
   return (
     <div>

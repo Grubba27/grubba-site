@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@react95/core';
 import styled from 'styled-components';
 

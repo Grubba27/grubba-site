@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import {Inetcfg2301, FlyingThroughSpace100, Notepad2, InfoBubble, Progman1} from '@react95/icons'
 
@@ -15,26 +14,16 @@ const StyledItem = styled.div`
 const StyledSpan = styled.span`
 	margin-top: 5px;
 `
-const getIcon = (icon) => {
-
-  switch (icon) {
-    case 'inetcfg_2301':
-      return Inetcfg2301 
-    case 'flying_through_space_100':
-      return FlyingThroughSpace100 
-    case 'notepad_2':
-      return Notepad2 
-    case 'info_bubble':
-      return InfoBubble
-    case 'progman_11':
-      return Progman1
-    default:
-      return Inetcfg2301 
-  }
+const Icons = {
+  inetcfg_2301: Inetcfg2301,
+  flying_through_space_100: FlyingThroughSpace100,
+  notepad_2: Notepad2,
+  info_bubble: InfoBubble,
+  progman_11: Progman1,
 }
 export default function Item({ item, openNotepad }) {
   const {name, icon } = item;
-  const Icon  = getIcon(icon);
+  const Icon  = Icons[icon] || Inetcfg2301;
   return (
     <StyledItem onClick={() => openNotepad(item)}>
       <Icon

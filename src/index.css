@@ -1,13 +1,104 @@
+/*
+ * Global look of @react95/core 2.x, ported here because 9.x changed it: its own
+ * `@react95/core/GlobalStyle` ships other fonts, scrollbars and link colors and
+ * no longer sets the Windows 95 cursors.
+ */
+@font-face {
+  font-family: 'MS Sans Serif';
+  src: url('./assets/win95/font/MS-Sans-Serif.woff2') format('woff2'),
+       url('./assets/win95/font/MS-Sans-Serif.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* title bar colors of the 2.x theme */
+  --r95-color-headerText: #ffffff;
+  --r95-color-headerNotActiveBackground: #868a8e;
+  --r95-color-headerNotActiveText: #ffffff;
+}
+
+* {
+  font-family: 'MS Sans Serif';
+  box-sizing: border-box;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+  background: url('./assets/win95/pattern/dropdown.png');
+  background-size: 3px 3px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-button {
+  width: 15px;
+  height: 15px;
+  background-color: #c3c7cb;
+  box-shadow: inset 1px 1px 0px 1px #ffffff, inset 0 0 0 1px #868a8e;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+::-webkit-scrollbar-button:end:decrement,
+::-webkit-scrollbar-button:start:increment {
+  display: none;
+}
+
+::-webkit-scrollbar-button:vertical {
+  background-size: 6px 3px;
+}
+
+::-webkit-scrollbar-button:horizontal {
+  background-size: 3px 6px;
+}
+
+::-webkit-scrollbar-button:vertical:start:decrement {
+  background-image: url('./assets/win95/pattern/upcaret.svg');
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+  background-image: url('./assets/win95/pattern/downcaret.svg');
+}
+
+::-webkit-scrollbar-button:horizontal:start:decrement {
+  background-image: url('./assets/win95/pattern/leftcaret.svg');
+}
+
+::-webkit-scrollbar-button:horizontal:end:increment {
+  background-image: url('./assets/win95/pattern/rightcaret.svg');
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c3c7cb;
+  box-shadow: inset 1px 1px 0px 1px #ffffff, inset 0 0 0 1px #868a8e;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+html, * {
+  cursor: url('./assets/win95/cursors/Arrow.png'), auto;
+}
+
+.pointer, :any-link {
+  cursor: url('./assets/win95/cursors/HandPointer.png'), pointer;
 }

@@ -1,6 +1,7 @@
-import React from 'react'
 import styled from 'styled-components'
-import { Modal, Frame } from '@react95/core'
+import { Frame } from '@react95/core'
+import { Explorer100 } from '@react95/icons'
+import Window from './Window'
 import Item from './Item'
 
 const FilesWrapper = styled.div`
@@ -9,11 +10,14 @@ const FilesWrapper = styled.div`
 	flex-wrap: wrap;
 `;
 
+// module-level so the element stays the same between renders: a new icon makes the window register again
+const icon = <Explorer100 variant="16x16_4" />
+
 
 function Explorer({ items, closeExplorer, openNotepad, isMobile }) {
   return (
-    <Modal
-      icon="explorer_100_16x16_4bit"
+    <Window
+      icon={icon}
       title="Explorer"
       closeModal={closeExplorer}
       style={{
@@ -28,7 +32,7 @@ function Explorer({ items, closeExplorer, openNotepad, isMobile }) {
       ]}>
       <Frame
         bg="white"
-        boxShadow="in"
+        boxShadow="$in"
         height="100%"
       >
         <FilesWrapper>
@@ -43,7 +47,7 @@ function Explorer({ items, closeExplorer, openNotepad, isMobile }) {
           }
         </FilesWrapper>
       </Frame>
-    </Modal>
+    </Window>
   )
 }
 

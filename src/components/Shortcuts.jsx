@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import {WindowsExplorer} from '@react95/icons'
 const StyledShorcut = styled.div`

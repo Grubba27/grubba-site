@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { FaLinkedin, FaGithub, FaInstagram, FaTwitter, FaMedium } from 'react-icons/fa'
 

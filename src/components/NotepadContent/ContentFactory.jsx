@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import { useContext } from 'react'
 
 import About from './About'
 import Resume from './Resume'
@@ -8,16 +8,11 @@ import Blog from "./Blog";
 
 import { Context } from "../../services/data";
 
-function ContentFactory({ id, isMobile }) {
+function ContentFactory({ id }) {
   const data = useContext(Context);
-  const [item, setItem] = useState(null);
+  const item = data.getItem(id);
 
-  useEffect(() => {
-    const file = data.getItem(id);
-    setItem(file);
-  }, [id, data]);
-
-  if (item === null) {
+  if (!item) {
     return (<div></div>);
   }
 

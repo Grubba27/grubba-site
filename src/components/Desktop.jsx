@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Explorer from './Explorer'
 import Notepad from './Notepad';
 import Shortcuts from './Shortcuts';
@@ -20,21 +20,10 @@ function Desktop() {
   const isMobile = window.innerWidth < 850;
 
   const data = useContext(Context);
-  const [explorerOpened, toggleExplorer] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [notepadOpened, toggleNotepad] = useState(false);
-  const [items, setItems] = useState([]);
-
-
-  useEffect(
-    () => {
-      const files = data.getItems();
-      setItems(files);
-      toggleExplorer(true);
-      const item = getItemByUrl(data)
-      setSelectedItem(item);
-      toggleNotepad(true);
-    }, [data, isMobile]);
+  const [explorerOpened, toggleExplorer] = useState(true);
+  const [selectedItem, setSelectedItem] = useState(() => getItemByUrl(data));
+  const [notepadOpened, toggleNotepad] = useState(true);
+  const items = data.getItems();
 
   useEffect(() => {
     if (!selectedItem) return
@@ -58,7 +47,7 @@ function Desktop() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Shortcuts openExplorer={ openExplorer }/>
       {
         explorerOpened && (
@@ -70,7 +59,7 @@ function Desktop() {
           <Notepad closeNotepad={ closeNotepad } selectedItem={ selectedItem } isMobile={ isMobile }/>
         )
       }
-    </React.Fragment>
+    </>
   )
 }
 
