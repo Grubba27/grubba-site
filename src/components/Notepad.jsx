@@ -30,7 +30,8 @@ function Notepad({ closeNotepad, selectedItem, isMobile }) {
         padding="$20"
         style={ {
           overflowY: "auto",
-          maxHeight: "60vh",
+          // on mobile the window starts lower, so its text has to end sooner to stay above the taskbar
+          maxHeight: isMobile ? "calc(65dvh - 127px)" : "60vh",
         } }
       >
         <ContentFactory id={ selectedItem.id }/>
