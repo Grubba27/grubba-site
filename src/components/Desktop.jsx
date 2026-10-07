@@ -3,16 +3,14 @@ import Explorer from './Explorer'
 import Notepad from './Notepad';
 import Shortcuts from './Shortcuts';
 import { Context } from "../services/data";
+import { navigate, redirect, usePathname } from "../services/navigation";
 
-const getItemByUrl = (data) => {
-  const url = window.location.pathname;
+// the first segment of the URL is the open file: /resume, /blog/123
+const getItemByUrl = (data, pathname) => {
   const defaultItem = data.getItems()[0];
+  const [id] = pathname.slice(1).split('/');
 
-  if (url === '/') return defaultItem;
-  const item = data.getItem(url.slice(1));
-
-  if (item) return item;
-  else return defaultItem;
+  return data.getItem(id) || defaultItem;
 }
 
 function Desktop() {
@@ -20,15 +18,15 @@ function Desktop() {
   const isMobile = window.innerWidth < 850;
 
   const data = useContext(Context);
+  const pathname = usePathname();
+  const selectedItem = getItemByUrl(data, pathname);
   const [explorerOpened, toggleExplorer] = useState(true);
-  const [selectedItem, setSelectedItem] = useState(() => getItemByUrl(data));
   const [notepadOpened, toggleNotepad] = useState(true);
   const items = data.getItems();
 
   useEffect(() => {
-    if (!selectedItem) return
-    window.history.pushState({}, selectedItem.name, `/${ selectedItem.id }`);
-  }, [selectedItem])
+    if (pathname.split('/')[1] !== selectedItem.id) redirect(`/${ selectedItem.id }`);
+  }, [pathname, selectedItem.id])
   const closeExplorer = () => {
     toggleExplorer(false);
   };
@@ -42,7 +40,7 @@ function Desktop() {
   };
 
   const openNotepad = (item) => {
-    setSelectedItem(item)
+    navigate(`/${ item.id }`);
     toggleNotepad(true);
   };
 

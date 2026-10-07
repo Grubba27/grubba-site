@@ -45,3 +45,11 @@ test('removes the code block toolbar that dev.to adds', () => {
 
   expect(sanitizePostHtml(html)).toBe('<div class="highlight"><pre><code>let a = 1;</code></pre></div>');
 });
+
+test('removes tweet avatars and actions from embedded tweets', () => {
+  const html = '<blockquote class="ltag__twitter-tweet"><img class="ltag__twitter-tweet__profile-image" src="https://example.com/a.jpg"><div class="ltag__twitter-tweet__body">hello</div><div class="ltag__twitter-tweet__actions"><a href="https://twitter.com/intent/like">like</a></div></blockquote>';
+
+  expect(sanitizePostHtml(html)).toBe(
+    '<blockquote class="ltag__twitter-tweet"><div class="ltag__twitter-tweet__body">hello</div></blockquote>'
+  );
+});

@@ -23,4 +23,4 @@ npm run lint     # ESLint
 
 ## Deployment
 
-Vercel builds and deploys every push to `master`. `vercel.json` sets the framework and sends every path to `index.html`, since the open file lives in the URL (`/about`, `/resume`, ...).
+Vercel builds and deploys every push to `master`. `vercel.json` sets the framework and sends every path to `index.html`, since the open file and blog post live in the URL (`/resume`, `/blog/123`, ...).

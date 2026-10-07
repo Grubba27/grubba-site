@@ -2,8 +2,13 @@ import DOMPurify from 'dompurify';
 
 const DEVTO_ORIGIN = 'https://dev.to';
 const YOUTUBE_EMBED = /^https:\/\/www\.youtube(?:-nocookie)?\.com\/embed\/([\w-]+)/;
-// dev.to chrome that only makes sense on dev.to itself
-const DEVTO_ONLY = ['highlight__panel', 'ltag__twitter-tweet__actions', 'ltag__twitter-tweet__twitter-logo'];
+// dev.to chrome that only makes sense on dev.to itself, and tweet avatars, which no longer load
+const DEVTO_ONLY = [
+  'highlight__panel',
+  'ltag__twitter-tweet__actions',
+  'ltag__twitter-tweet__twitter-logo',
+  'ltag__twitter-tweet__profile-image',
+];
 
 const purify = DOMPurify(window);
 
