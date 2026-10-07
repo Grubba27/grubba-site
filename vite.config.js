@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { configDefaults, defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
@@ -18,6 +18,7 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/setupTests.js',
+    exclude: [...configDefaults.exclude, '.claude/**'],
     // both ship ESM that Node can't load as-is (CSS imports, extensionless re-exports)
     server: { deps: { inline: ['@react95/core', '@react95/icons'] } },
   },
