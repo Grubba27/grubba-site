@@ -3,7 +3,6 @@ import { useContext } from 'react'
 import About from './About'
 import Resume from './Resume'
 import Contact from './Contact'
-import Projects from './Projects'
 import Blog from "./Blog";
 
 import { Context } from "../../services/data";
@@ -23,8 +22,6 @@ function ContentFactory({ id }) {
       return <Resume content={item.content} />
     case 'contact':
       return <Contact content={item.content} />
-    case 'projects':
-      return <Projects content={item.content} />
     case 'blog':
       return <Blog content={item.content}  />
 

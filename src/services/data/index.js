@@ -1,7 +1,6 @@
 import { about } from './about';
 import { resume } from "./resume";
 import { contact } from "./contact";
-import { projects } from "./projects";
 import { createContext } from 'react';
 import { blog } from "./blog";
 const Data = () => {
@@ -12,7 +11,6 @@ const Data = () => {
     about,
     resume,
     contact,
-    projects,
     blog
   ];
   const getItems = () =>

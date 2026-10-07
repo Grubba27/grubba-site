@@ -4,9 +4,9 @@ export const contact = {
   icon: 'inetcfg_2301',
   content: {
     emailText:
-      'Contact me on this email if you need! ',
+      'Feel free to email me at ',
     email: 'grubba27@hotmail.com',
-    socialText: 'Or you can reach me out through social media: ',
+    socialText: 'Or reach me on social media:',
     social: [
       {
         name: 'FaLinkedin',

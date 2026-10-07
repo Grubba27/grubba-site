@@ -1,15 +1,11 @@
-import { Button } from '@react95/core';
-import styled from 'styled-components';
-
-const StyledLink = styled.a`
-  margin-bottom: 10px;
-`;
-
 function Resume({ content }) {
-  const { workExperience, education, resumeLink } = content;
+  const { summary, workExperience, education } = content;
 
   return (
     <div>
+      <h2>Summary</h2>
+      <p>{summary}</p>
+      <hr />
       <h2>Work Experience</h2>
       {workExperience.map((exp, idx) => (
         <div key={idx}>
@@ -37,11 +33,6 @@ function Resume({ content }) {
           <br />
         </div>
       ))}
-      <StyledLink href={resumeLink} download>
-        <Button style={{ fontSize: '14px' }} className="pointer">
-          Download Resume
-        </Button>
-      </StyledLink>
     </div>
   );
 }

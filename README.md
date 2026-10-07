@@ -17,7 +17,7 @@ npm run lint     # ESLint
 
 ## Where things are
 
-- `src/services/data` holds the content of each file on the desktop (About, Resume, Contact, Projects, Blog).
+- `src/services/data` holds the content of each file on the desktop (About, Resume, Contact, Blog).
 - `src/components` has the desktop, the windows and the taskbar; `src/components/NotepadContent` is what the Notepad shows for each file.
 - `src/index.css` and `src/assets/win95` keep the look of React95 2.x (font, cursors, scrollbars), which later versions changed.
 

@@ -4,11 +4,12 @@ export const about = {
   icon: "info_bubble",
   content: {
     paragraphs: [
-      "Hello there! My name is Gabriel Grubba and I'm a full time SWE working in Discourse.",
-      "Previusly worked as an for Meteor.js as a Maintainer",
-      "I have a passion for open source and I love to share my knowledge with the community. I have experience with Go and Ruby.",
-      "In 2023 I've won the first place MongoDB hackaton using Golang and Charm",
-      "About me outside of work, I love souls-like games, karting, traveling and watching animes with my beautiful girlfriend.",
+      "Hi, I'm Gabriel Grubba, a software engineer at Discourse.",
+      "I see myself as a product engineer: I like owning a feature from the first conversation with a customer to the day it ships, building it across the stack with Ruby on Rails and Ember.js and backing it with tests.",
+      "Lately I've been building with AI: I spearheaded Discourse's admin helper agent, and I also helped ship its new voice and live video features.",
+      "Before Discourse, I was a software engineer and developer advocate at Meteor Software, where I helped maintain Meteor.js, an open-source JavaScript framework with more than 42k stars on GitHub.",
+      "I care about open source and about sharing what I learn through blog posts, documentation, and talks. In 2023, I won first place in a MongoDB hackathon with a project built in Go and Charm.",
+      "Outside of work, I enjoy soulslike games, karting, traveling, and watching anime with my girlfriend.",
     ],
   },
 };

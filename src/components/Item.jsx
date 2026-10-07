@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {Inetcfg2301, FlyingThroughSpace100, Notepad2, InfoBubble, Progman1} from '@react95/icons'
+import {Inetcfg2301, Notepad2, InfoBubble, Progman1} from '@react95/icons'
 
 const StyledItem = styled.div`
 	display: flex;
@@ -16,7 +16,6 @@ const StyledSpan = styled.span`
 `
 const Icons = {
   inetcfg_2301: Inetcfg2301,
-  flying_through_space_100: FlyingThroughSpace100,
   notepad_2: Notepad2,
   info_bubble: InfoBubble,
   progman_11: Progman1,
