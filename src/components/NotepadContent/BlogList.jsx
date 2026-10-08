@@ -1,17 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "@react95/core";
+import { Button, Checkbox } from "@react95/core";
 import styled from "styled-components";
 import DefragSpinner from "./DefragSpinner";
-import { PERSONAL, getSource, postsQuery } from "../../services/devto";
+import { postsQuery } from "../../services/devto";
+
+// the checkbox is sized for one line of 12px text, and this label can wrap
+const Filter = styled(Checkbox)`
+  && {
+    height: auto;
+    line-height: normal;
+  }
+`
 
 const Tags = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
+  margin-top: 8px;
 `
 
-// a tag that is on stays pressed in, like the button of the open window in the taskbar
+// the tag being filtered by stays pressed in, like the button of the open window in the taskbar
 const Tag = styled(Button)`
   && {
     padding: 5px 10px 4px;
@@ -35,11 +44,22 @@ const Actions = styled.p`
   gap: 12px;
 `
 
+// the tags worth filtering by are the ones that group posts, from the most to the least used
+const getSharedTags = (posts) => {
+  const uses = new Map();
+  posts.flatMap((post) => post.tag_list).forEach((name) => uses.set(name, (uses.get(name) ?? 0) + 1));
+
+  return [...uses]
+    .filter(([, count]) => count > 1)
+    .sort(([, a], [, b]) => b - a)
+    .map(([name]) => name);
+}
+
 // clicks that ask for a new tab or window are left to the browser
 const isPlainClick = (event) =>
   event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
 
-export default function BlogList({ username, blog, openPost, sources, setSources }) {
+export default function BlogList({ username, blog, openPost, filters, setFilters }) {
   const {
     data,
     isPending,
@@ -58,35 +78,35 @@ export default function BlogList({ username, blog, openPost, sources, setSources
       </>
     )
   }
-  const organizations = new Map(
-    data.filter((post) => post.organization).map((post) => [getSource(post), `${post.organization.name} blog`])
-  );
-  const tags = [
-    { source: PERSONAL, name: 'Personal' },
-    ...Array.from(organizations, ([source, name]) => ({ source, name })),
-  ];
-  const toggle = (source) => {
-    const next = sources.includes(source) ? sources.filter((selected) => selected !== source) : [...sources, source];
-    // with nothing selected there would be nothing to read
-    if (next.length > 0) setSources(next);
-  };
-  const posts = data.filter((post) => sources.includes(getSource(post)));
+  // posts published under an organization, like the Meteor blog, are opt-in
+  const organizations = [...new Set(data.filter((post) => post.organization).map((post) => post.organization.name))];
+  const listed = filters.organizations ? data : data.filter((post) => !post.organization);
+  const tags = getSharedTags(listed);
+  // a tag can leave the list above when the organizations are unticked
+  const tag = tags.includes(filters.tag) ? filters.tag : null;
+  const posts = tag ? listed.filter((post) => post.tag_list.includes(tag)) : listed;
   return (
     <>
-      {tags.length > 1 && (
-        <Tags>
-          {tags.map(({ source, name }) => (
-            <Tag
-              key={source}
-              className="pointer"
-              aria-pressed={sources.includes(source)}
-              onClick={() => toggle(source)}
-            >
-              {name}
-            </Tag>
-          ))}
-        </Tags>
+      {organizations.length > 0 && (
+        <Filter
+          checked={filters.organizations}
+          onChange={(event) => setFilters({ ...filters, organizations: event.target.checked })}
+        >
+          Include the posts I wrote for the {organizations.join(' and ')} blog
+        </Filter>
       )}
+      <Tags>
+        {tags.map((name) => (
+          <Tag
+            key={name}
+            className="pointer"
+            aria-pressed={name === tag}
+            onClick={() => setFilters({ ...filters, tag: name === tag ? null : name })}
+          >
+            #{name}
+          </Tag>
+        ))}
+      </Tags>
       <ul
         style={{
           paddingLeft: "1rem",
@@ -109,6 +129,8 @@ export default function BlogList({ username, blog, openPost, sources, setSources
               </h3>
               <p>
                 {post.readable_publish_date} - Reading time: {post.reading_time_minutes} minutes.
+                <br />
+                {post.tag_list.map((name) => `#${name}`).join(' ')}
               </p>
               <p>{post.description}</p>
               <Actions>

@@ -5,26 +5,26 @@ import Blog from './Blog';
 
 const content = { blog: 'https://dev.to/grubba', username: 'grubba' };
 
+const post = (id, title, tag_list, extra = {}) => ({
+  id,
+  title,
+  description: `About ${title}`,
+  url: `https://dev.to/grubba/post-${id}`,
+  readable_publish_date: 'Feb 12',
+  reading_time_minutes: 4,
+  language: 'en',
+  tag_list,
+  ...extra,
+});
+
 const posts = [
-  {
-    id: 1,
-    title: 'Faster startup in Meteor',
-    description: 'A post for the Meteor blog',
-    url: 'https://dev.to/meteor/faster-startup',
-    readable_publish_date: 'Feb 12',
-    reading_time_minutes: 4,
-    language: 'en',
+  post(1, 'Faster startup in Meteor', ['meteor', 'javascript'], {
+    url: 'https://dev.to/meteor/post-1',
     organization: { name: 'Meteor', username: 'meteor' },
-  },
-  {
-    id: 2,
-    title: 'Calling Rust from Go',
-    description: 'A post of my own',
-    url: 'https://dev.to/grubba/calling-rust-from-go',
-    readable_publish_date: "Apr 12 '23",
-    reading_time_minutes: 3,
-    language: 'en',
-  },
+  }),
+  post(2, 'Calling Rust from Go', ['go', 'rust']),
+  post(3, 'A typelevel calculator', ['typescript', 'javascript']),
+  post(4, 'Discord as a CDN', ['go']),
 ];
 
 const bodies = {
@@ -40,13 +40,15 @@ const renderBlog = () =>
     </QueryClientProvider>
   );
 
+const listedTitles = () => screen.getAllByRole('heading', { level: 3 }).map((heading) => heading.textContent);
+
 beforeEach(() => {
   window.history.replaceState({}, '', '/blog');
   vi.stubGlobal('fetch', vi.fn((url) => {
     const [, id] = url.match(/\/articles\/(\d+)$/) || [];
     if (!id) return respond(posts);
-    const post = posts.find((listed) => String(listed.id) === id);
-    return post ? respond({ ...post, body_html: bodies[id] }) : respond({ error: 'not found' }, false);
+    const listed = posts.find((candidate) => String(candidate.id) === id);
+    return listed ? respond({ ...listed, body_html: bodies[id] }) : respond({ error: 'not found' }, false);
   }));
 });
 
@@ -58,41 +60,66 @@ test('lists my own posts and leaves out the ones written for an organization', a
   renderBlog();
 
   expect(await screen.findByRole('link', { name: 'Calling Rust from Go' })).toBeInTheDocument();
-  expect(screen.queryByRole('link', { name: 'Faster startup in Meteor' })).not.toBeInTheDocument();
-  expect(screen.getByRole('link', { name: 'Read more on dev.to' })).toHaveAttribute('href', posts[1].url);
+  expect(listedTitles()).toEqual(['Calling Rust from Go', 'A typelevel calculator', 'Discord as a CDN']);
+  expect(screen.getAllByRole('link', { name: 'Read more on dev.to' })[0]).toHaveAttribute('href', posts[1].url);
+  expect(screen.getByText(/#go #rust/)).toBeInTheDocument();
 });
 
-test('the tags choose which blogs are listed', async () => {
+test('the checkbox brings in the posts written for an organization', async () => {
   renderBlog();
-  const personal = await screen.findByRole('button', { name: 'Personal' });
-  const meteor = screen.getByRole('button', { name: 'Meteor blog' });
-  expect(personal).toHaveAttribute('aria-pressed', 'true');
-  expect(meteor).toHaveAttribute('aria-pressed', 'false');
 
-  await userEvent.click(meteor);
+  await userEvent.click(await screen.findByRole('checkbox', { name: 'Include the posts I wrote for the Meteor blog' }));
 
-  expect(screen.getByRole('link', { name: 'Faster startup in Meteor' })).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: 'Calling Rust from Go' })).toBeInTheDocument();
-
-  await userEvent.click(personal);
-
-  expect(screen.getByRole('link', { name: 'Faster startup in Meteor' })).toBeInTheDocument();
-  expect(screen.queryByRole('link', { name: 'Calling Rust from Go' })).not.toBeInTheDocument();
+  expect(listedTitles()).toEqual([
+    'Faster startup in Meteor',
+    'Calling Rust from Go',
+    'A typelevel calculator',
+    'Discord as a CDN',
+  ]);
 });
 
-test('the last tag stays on, so the list is never empty', async () => {
+test('offers the dev.to tags shared by the listed posts', async () => {
+  renderBlog();
+  await screen.findByRole('link', { name: 'Calling Rust from Go' });
+
+  expect(screen.getByRole('button', { name: '#go' })).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: '#rust' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: '#javascript' })).not.toBeInTheDocument();
+
+  await userEvent.click(screen.getByRole('checkbox'));
+
+  expect(screen.getByRole('button', { name: '#javascript' })).toBeInTheDocument();
+});
+
+test('a tag filters the list and lets go when clicked again', async () => {
   renderBlog();
 
-  await userEvent.click(await screen.findByRole('button', { name: 'Personal' }));
+  await userEvent.click(await screen.findByRole('button', { name: '#go' }));
 
-  expect(screen.getByRole('button', { name: 'Personal' })).toHaveAttribute('aria-pressed', 'true');
-  expect(screen.getByRole('link', { name: 'Calling Rust from Go' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: '#go' })).toHaveAttribute('aria-pressed', 'true');
+  expect(listedTitles()).toEqual(['Calling Rust from Go', 'Discord as a CDN']);
+
+  await userEvent.click(screen.getByRole('button', { name: '#go' }));
+
+  expect(screen.getByRole('button', { name: '#go' })).toHaveAttribute('aria-pressed', 'false');
+  expect(listedTitles()).toHaveLength(3);
+});
+
+test('a tag that is no longer offered stops filtering', async () => {
+  renderBlog();
+  await userEvent.click(await screen.findByRole('checkbox'));
+  await userEvent.click(screen.getByRole('button', { name: '#javascript' }));
+  expect(listedTitles()).toEqual(['Faster startup in Meteor', 'A typelevel calculator']);
+
+  await userEvent.click(screen.getByRole('checkbox'));
+
+  expect(listedTitles()).toHaveLength(3);
 });
 
 test('opens a post in place and goes back to the list', async () => {
   renderBlog();
 
-  await userEvent.click(await screen.findByRole('button', { name: 'Read here' }));
+  await userEvent.click((await screen.findAllByRole('button', { name: 'Read here' }))[0]);
 
   expect(window.location.pathname).toBe('/blog/2');
   expect(screen.getByRole('heading', { name: 'Calling Rust from Go' })).toBeInTheDocument();
@@ -118,15 +145,17 @@ test('the title opens the post in place too', async () => {
   expect(await screen.findByRole('article')).toBeInTheDocument();
 });
 
-test('keeps the tags when coming back from a post', async () => {
+test('keeps the filters when coming back from a post', async () => {
   renderBlog();
 
-  await userEvent.click(await screen.findByRole('button', { name: 'Meteor blog' }));
-  await userEvent.click(screen.getAllByRole('button', { name: 'Read here' })[1]);
+  await userEvent.click(await screen.findByRole('checkbox'));
+  await userEvent.click(screen.getByRole('button', { name: '#go' }));
+  await userEvent.click(screen.getAllByRole('button', { name: 'Read here' })[0]);
   await userEvent.click(screen.getAllByRole('button', { name: '< Back to posts' })[0]);
 
-  expect(screen.getByRole('button', { name: 'Meteor blog' })).toHaveAttribute('aria-pressed', 'true');
-  expect(screen.getByRole('link', { name: 'Faster startup in Meteor' })).toBeInTheDocument();
+  expect(screen.getByRole('checkbox')).toBeChecked();
+  expect(screen.getByRole('button', { name: '#go' })).toHaveAttribute('aria-pressed', 'true');
+  expect(listedTitles()).toEqual(['Calling Rust from Go', 'Discord as a CDN']);
 });
 
 test('a post URL opens that post', async () => {
@@ -139,7 +168,7 @@ test('a post URL opens that post', async () => {
 
 test('follows the browser history between the list and a post', async () => {
   renderBlog();
-  await userEvent.click(await screen.findByRole('button', { name: 'Read here' }));
+  await userEvent.click((await screen.findAllByRole('button', { name: 'Read here' }))[0]);
   await screen.findByRole('article');
 
   window.history.back();
