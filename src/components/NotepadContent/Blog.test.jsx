@@ -62,12 +62,30 @@ test('lists my own posts and leaves out the ones written for an organization', a
   expect(screen.getByRole('link', { name: 'Read more on dev.to' })).toHaveAttribute('href', posts[1].url);
 });
 
-test('the filter brings in the posts written for an organization', async () => {
+test('the tags choose which blogs are listed', async () => {
   renderBlog();
+  const personal = await screen.findByRole('button', { name: 'Personal' });
+  const meteor = screen.getByRole('button', { name: 'Meteor blog' });
+  expect(personal).toHaveAttribute('aria-pressed', 'true');
+  expect(meteor).toHaveAttribute('aria-pressed', 'false');
 
-  await userEvent.click(await screen.findByRole('checkbox', { name: 'Include the posts I wrote for the Meteor blog' }));
+  await userEvent.click(meteor);
 
   expect(screen.getByRole('link', { name: 'Faster startup in Meteor' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Calling Rust from Go' })).toBeInTheDocument();
+
+  await userEvent.click(personal);
+
+  expect(screen.getByRole('link', { name: 'Faster startup in Meteor' })).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'Calling Rust from Go' })).not.toBeInTheDocument();
+});
+
+test('the last tag stays on, so the list is never empty', async () => {
+  renderBlog();
+
+  await userEvent.click(await screen.findByRole('button', { name: 'Personal' }));
+
+  expect(screen.getByRole('button', { name: 'Personal' })).toHaveAttribute('aria-pressed', 'true');
   expect(screen.getByRole('link', { name: 'Calling Rust from Go' })).toBeInTheDocument();
 });
 
@@ -100,14 +118,14 @@ test('the title opens the post in place too', async () => {
   expect(await screen.findByRole('article')).toBeInTheDocument();
 });
 
-test('keeps the filter when coming back from a post', async () => {
+test('keeps the tags when coming back from a post', async () => {
   renderBlog();
 
-  await userEvent.click(await screen.findByRole('checkbox'));
+  await userEvent.click(await screen.findByRole('button', { name: 'Meteor blog' }));
   await userEvent.click(screen.getAllByRole('button', { name: 'Read here' })[1]);
   await userEvent.click(screen.getAllByRole('button', { name: '< Back to posts' })[0]);
 
-  expect(screen.getByRole('checkbox')).toBeChecked();
+  expect(screen.getByRole('button', { name: 'Meteor blog' })).toHaveAttribute('aria-pressed', 'true');
   expect(screen.getByRole('link', { name: 'Faster startup in Meteor' })).toBeInTheDocument();
 });
 

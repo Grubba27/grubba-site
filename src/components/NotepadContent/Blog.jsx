@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import BlogList from "./BlogList";
 import BlogPost from "./BlogPost";
+import { PERSONAL } from "../../services/devto";
 import { navigate, usePathname } from "../../services/navigation";
 
 // what scrolls is the Notepad around the content, not the page
@@ -15,8 +16,8 @@ function Blog({ content }) {
   const { blog, username } = content;
   // /blog is the list of posts, /blog/123 is a post
   const postId = usePathname().split('/')[2];
-  // kept here so the list is the same when coming back from a post
-  const [withOrganizations, setWithOrganizations] = useState(false);
+  // which blogs to list; kept here so the list is the same when coming back from a post
+  const [sources, setSources] = useState([PERSONAL]);
   const wrapper = useRef(null);
   const listScroll = useRef(0);
 
@@ -47,8 +48,8 @@ function Blog({ content }) {
                 username={ username }
                 blog={ blog }
                 openPost={ openPost }
-                withOrganizations={ withOrganizations }
-                setWithOrganizations={ setWithOrganizations }
+                sources={ sources }
+                setSources={ setSources }
               />
             </>
           )

@@ -11,6 +11,11 @@ export const fetchPosts = (username, perPage = 30) =>
 
 export const fetchPost = (id) => getJson(`/articles/${encodeURIComponent(id)}`);
 
+// posts are grouped by where they were published: my own blog or an organization's, like Meteor
+export const PERSONAL = 'personal';
+
+export const getSource = (post) => post.organization?.username ?? PERSONAL;
+
 // posts rarely change, so one fetch is enough for a visit
 const cache = { staleTime: 5 * 60 * 1000, retry: 1 };
 

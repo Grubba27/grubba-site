@@ -1,14 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
-import { Button, Checkbox } from "@react95/core";
+import { Button } from "@react95/core";
 import styled from "styled-components";
 import DefragSpinner from "./DefragSpinner";
-import { postsQuery } from "../../services/devto";
+import { PERSONAL, getSource, postsQuery } from "../../services/devto";
 
-// the checkbox is sized for one line of 12px text, and this label can wrap
-const Filter = styled(Checkbox)`
+const Tags = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+`
+
+// a tag that is on stays pressed in, like the button of the open window in the taskbar
+const Tag = styled(Button)`
   && {
-    height: auto;
-    line-height: normal;
+    padding: 5px 10px 4px;
+    outline-offset: -3px;
+  }
+
+  &&:active {
+    padding: 6px 9px 3px 11px;
+  }
+
+  &&[aria-pressed="true"] {
+    background-color: var(--r95-color-borderLighter);
+    box-shadow: var(--r95-shadow-in);
   }
 `
 
@@ -23,7 +39,7 @@ const Actions = styled.p`
 const isPlainClick = (event) =>
   event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
 
-export default function BlogList({ username, blog, openPost, withOrganizations, setWithOrganizations }) {
+export default function BlogList({ username, blog, openPost, sources, setSources }) {
   const {
     data,
     isPending,
@@ -42,18 +58,34 @@ export default function BlogList({ username, blog, openPost, withOrganizations, 
       </>
     )
   }
-  // posts published under an organization, like the Meteor blog, are opt-in
-  const organizations = [...new Set(data.filter((post) => post.organization).map((post) => post.organization.name))];
-  const posts = withOrganizations ? data : data.filter((post) => !post.organization);
+  const organizations = new Map(
+    data.filter((post) => post.organization).map((post) => [getSource(post), `${post.organization.name} blog`])
+  );
+  const tags = [
+    { source: PERSONAL, name: 'Personal' },
+    ...Array.from(organizations, ([source, name]) => ({ source, name })),
+  ];
+  const toggle = (source) => {
+    const next = sources.includes(source) ? sources.filter((selected) => selected !== source) : [...sources, source];
+    // with nothing selected there would be nothing to read
+    if (next.length > 0) setSources(next);
+  };
+  const posts = data.filter((post) => sources.includes(getSource(post)));
   return (
     <>
-      {organizations.length > 0 && (
-        <Filter
-          checked={withOrganizations}
-          onChange={(event) => setWithOrganizations(event.target.checked)}
-        >
-          Include the posts I wrote for the {organizations.join(' and ')} blog
-        </Filter>
+      {tags.length > 1 && (
+        <Tags>
+          {tags.map(({ source, name }) => (
+            <Tag
+              key={source}
+              className="pointer"
+              aria-pressed={sources.includes(source)}
+              onClick={() => toggle(source)}
+            >
+              {name}
+            </Tag>
+          ))}
+        </Tags>
       )}
       <ul
         style={{
