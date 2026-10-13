@@ -22,6 +22,15 @@ npm run lint     # ESLint
 - `src/index.css` and `src/assets/win95` keep the look of React95 2.x (font, cursors, scrollbars), which later versions changed.
 - `@react95/core` is pinned to an exact version: `src/components/Window.jsx` and `Taskbar.jsx` restyle parts of its markup to keep that look, so compare the site before and after when bumping it.
 
+## Themes
+
+The desktop has two looks, picked from the Start menu and remembered in the browser (`?theme=brutalist` or `?theme=win95` in the URL also works):
+
+- **Windows 95** is what the components look like by themselves, and the default.
+- **Neo-brutalist** is `src/themes/brutalist.css`: one stylesheet scoped to `:root[data-theme='brutalist']`, loaded only for the visitors who pick it. It repaints the same windows, taskbar and files, so every feature exists in both.
+
+A new theme is another stylesheet scoped the same way plus an entry in `src/services/theme.js`. The class names the themes hang on (`window`, `taskbar`, `notepad__page`, `blog-tags`, ...) are set in the components and have no styles of their own.
+
 ## Deployment
 
 Vercel builds and deploys every push to `master`. `vercel.json` sets the framework and sends every path to `index.html`, since the open file and blog post live in the URL (`/resume`, `/blog/123`, ...).

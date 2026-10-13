@@ -1,0 +1,648 @@
+/*
+ * Neo-brutalist theme: the same desktop, windows and taskbar as the Windows 95 look,
+ * repainted. Every rule is scoped to :root[data-theme='brutalist'], which is also
+ * what lets it win over the Windows 95 rules without touching them.
+ */
+
+/* ---------- tokens ---------- */
+
+:root[data-theme='brutalist'] {
+  color-scheme: light;
+
+  --bx-ink: #111111;
+  --bx-ground: #f4f0e6;
+  --bx-paper: #ffffff;
+  --bx-yellow: #ffd23f;
+  --bx-pink: #ff90b3;
+  --bx-green: #6fe3a1;
+  --bx-blue: #86b6ff;
+  --bx-accent: var(--bx-yellow);
+  --bx-code-bg: #16161a;
+
+  --bx-sans: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --bx-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas,
+    'Liberation Mono', monospace;
+
+  --bx-border: 3px solid var(--bx-ink);
+  --bx-border-thin: 2px solid var(--bx-ink);
+  --bx-shadow: 7px 7px 0 0 var(--bx-ink);
+  --bx-shadow-sm: 3px 3px 0 0 var(--bx-ink);
+  --bx-press: 110ms;
+  --bx-taskbar: 48px;
+
+  /* sizes the windows read; their fallbacks are the Windows 95 ones */
+  --notepad-width: min(36rem, 46vw);
+  --notepad-max-height: calc(85vh - 13.5rem);
+  --notepad-max-height-mobile: calc(65dvh - 13rem);
+}
+
+/* the palette of @react95/core, which its components paint themselves with */
+:root[data-theme='brutalist'] body {
+  --r95-color-material: var(--bx-paper);
+  --r95-color-materialText: var(--bx-ink);
+  --r95-color-materialTextInvert: var(--bx-ink);
+  --r95-color-headerText: var(--bx-ink);
+  --r95-color-headerNotActiveBackground: var(--bx-paper);
+  --r95-color-headerNotActiveText: var(--bx-ink);
+  --r95-color-borderDark: var(--bx-ink);
+  --r95-color-borderDarkest: var(--bx-ink);
+  --r95-color-inputBackground: var(--bx-paper);
+  --r95-shadow-in: none;
+  --r95-shadow-out: var(--bx-shadow-sm);
+  --r95-shadow-input: none;
+}
+
+/* The file open in the Notepad tints the whole desktop. Anything painted with the accent
+   through a @react95/core colour has to set that colour below #root, where the accent is known. */
+:root[data-theme='brutalist'] #root:has(.window[data-file='resume']) { --bx-accent: var(--bx-pink); }
+:root[data-theme='brutalist'] #root:has(.window[data-file='contact']) { --bx-accent: var(--bx-green); }
+:root[data-theme='brutalist'] #root:has(.window[data-file='blog']) { --bx-accent: var(--bx-blue); }
+
+/* ---------- document ---------- */
+
+:root[data-theme='brutalist'] body {
+  background: var(--bx-ground)
+    radial-gradient(color-mix(in srgb, var(--bx-ink) 16%, transparent) 1px, transparent 1.5px) 0 0 / 22px 22px;
+  color: var(--bx-ink);
+  font-size: 16px;
+}
+
+:root[data-theme='brutalist'],
+:root[data-theme='brutalist'] * {
+  font-family: var(--bx-sans);
+  cursor: auto;
+}
+
+:root[data-theme='brutalist'] :is(a, button, label, .pointer, .file, .shortcut),
+:root[data-theme='brutalist'] :is(a, button, label, .pointer, .file, .shortcut) * {
+  cursor: pointer;
+}
+
+:root[data-theme='brutalist'] ::selection {
+  background: var(--bx-ink);
+  color: var(--bx-ground);
+}
+
+:root[data-theme='brutalist'] :focus-visible {
+  outline: 3px solid var(--bx-ink);
+  outline-offset: 2px;
+}
+
+/* scrollbars: the colours are written out because they do not read the tokens above */
+:root[data-theme='brutalist'] ::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+  background: #f4f0e6;
+}
+
+:root[data-theme='brutalist'] ::-webkit-scrollbar-button {
+  display: none;
+}
+
+:root[data-theme='brutalist'] ::-webkit-scrollbar-thumb {
+  border: 3px solid #f4f0e6;
+  background: #111111;
+  box-shadow: none;
+}
+
+/* ---------- buttons: a hard shadow that gives way when pressed ---------- */
+
+:root[data-theme='brutalist'] button {
+  padding: 7px 14px;
+  border: var(--bx-border-thin);
+  border-radius: 0;
+  outline: none;
+  color: var(--bx-ink);
+  font: 700 13px / 1.2 var(--bx-mono);
+  box-shadow: var(--bx-shadow-sm);
+  transition:
+    transform var(--bx-press) ease-out,
+    box-shadow var(--bx-press) ease-out;
+}
+
+@media (hover: hover) {
+  :root[data-theme='brutalist'] button:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 0 var(--bx-ink);
+  }
+}
+
+:root[data-theme='brutalist'] button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 0 var(--bx-ink);
+}
+
+:root[data-theme='brutalist'] button:focus-visible {
+  outline: 3px solid var(--bx-ink);
+  outline-offset: 2px;
+}
+
+/* ---------- desktop ---------- */
+
+:root[data-theme='brutalist'] .shortcut {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+:root[data-theme='brutalist'] .shortcut > div {
+  padding: 1px 7px;
+  border: var(--bx-border-thin);
+  background: var(--bx-paper);
+  font: 700 12.5px / 1.5 var(--bx-mono);
+}
+
+/* ---------- windows ---------- */
+
+:root[data-theme='brutalist'] .window {
+  /* the title bar of the window in front */
+  --r95-color-headerBackground: var(--bx-accent);
+  padding: 0;
+  border: var(--bx-border);
+  background: var(--bx-paper);
+  box-shadow: var(--bx-shadow);
+}
+
+:root[data-theme='brutalist'] .window > .draggable {
+  align-items: center;
+  gap: 8px;
+  height: auto;
+  min-height: 38px;
+  margin: 0;
+  padding: 5px 8px 5px 10px;
+  border-bottom: var(--bx-border);
+}
+
+:root[data-theme='brutalist'] .window > .draggable > svg {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+:root[data-theme='brutalist'] .window > .draggable > div:first-of-type {
+  font: 800 15px / 1.2 var(--bx-sans);
+  letter-spacing: -0.01em;
+}
+
+:root[data-theme='brutalist'] .window > .draggable button {
+  width: 24px;
+  height: 24px;
+  margin-left: 6px;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 2px 2px 0 0 var(--bx-ink);
+}
+
+:root[data-theme='brutalist'] .window > .draggable button:active {
+  padding: 0;
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--bx-ink);
+}
+
+:root[data-theme='brutalist'] .window > ul {
+  gap: 2px;
+  padding: 4px 6px;
+  border-width: 0 0 3px;
+  border-bottom-color: var(--bx-ink);
+  box-shadow: none;
+}
+
+/* the open menu is inked in */
+:root[data-theme='brutalist'] .window > ul > li {
+  --r95-color-material: var(--bx-ink);
+  --r95-color-materialTextInvert: var(--bx-paper);
+  padding: 2px 8px;
+  font: 600 13px / 1.5 var(--bx-mono);
+}
+
+:root[data-theme='brutalist'] .window__content {
+  padding: 0;
+}
+
+:root[data-theme='brutalist'] .window__buttons {
+  padding: 10px 12px;
+  border-top: var(--bx-border);
+}
+
+:root[data-theme='brutalist'] .window__buttons button,
+:root[data-theme='brutalist'] .notepad__page button {
+  --r95-color-material: var(--bx-accent);
+}
+
+/* ---------- explorer ---------- */
+
+:root[data-theme='brutalist'] .explorer__files {
+  padding: 8px 6px;
+}
+
+:root[data-theme='brutalist'] .file > span {
+  margin-top: 7px;
+  padding: 1px 6px;
+  font: 600 12.5px / 1.5 var(--bx-mono);
+}
+
+@media (hover: hover) {
+  :root[data-theme='brutalist'] .file:hover > span {
+    background: var(--bx-accent);
+    box-shadow: 0 0 0 2px var(--bx-ink);
+  }
+}
+
+/* ---------- notepad: the text of a file ---------- */
+
+:root[data-theme='brutalist'] .notepad__page {
+  padding: 22px 24px;
+  background: var(--bx-paper);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+:root[data-theme='brutalist'] .notepad__page h2 {
+  margin: 0 0 14px;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+:root[data-theme='brutalist'] .notepad__page h3 {
+  margin: 0 0 6px;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+:root[data-theme='brutalist'] .notepad__page p {
+  margin: 0 0 12px;
+}
+
+/* a title right under a button, like the one of a post under "Back to posts" */
+:root[data-theme='brutalist'] .notepad__page button + h2 {
+  margin-top: 20px;
+}
+
+:root[data-theme='brutalist'] .notepad__page hr + p + button {
+  margin-bottom: 4px;
+}
+
+:root[data-theme='brutalist'] .notepad__page :is(b, strong) {
+  font-weight: 800;
+}
+
+:root[data-theme='brutalist'] .notepad__page a {
+  color: var(--bx-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+@media (hover: hover) {
+  :root[data-theme='brutalist'] .notepad__page a:hover {
+    background: var(--bx-accent);
+  }
+}
+
+:root[data-theme='brutalist'] .notepad__page hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: var(--bx-border);
+}
+
+:root[data-theme='brutalist'] .notepad__page ul {
+  margin: 0 0 14px;
+}
+
+:root[data-theme='brutalist'] .notepad__page li {
+  margin-bottom: 4px;
+}
+
+/* Contact.txt: the social links become keys */
+:root[data-theme='brutalist'] .notepad__page li > a.pointer {
+  display: inline-grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border: var(--bx-border-thin);
+  background: var(--bx-paper);
+  font-size: 22px;
+  box-shadow: var(--bx-shadow-sm);
+  transition:
+    transform var(--bx-press) ease-out,
+    box-shadow var(--bx-press) ease-out;
+}
+
+@media (hover: hover) {
+  :root[data-theme='brutalist'] .notepad__page li > a.pointer:hover {
+    background: var(--bx-accent);
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 0 var(--bx-ink);
+  }
+}
+
+:root[data-theme='brutalist'] .notepad__page li > a.pointer:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 0 var(--bx-ink);
+}
+
+/* ---------- Blog.txt ---------- */
+
+:root[data-theme='brutalist'] .blog-filter {
+  min-height: 22px;
+  margin-block: 6px;
+  padding-left: 32px;
+}
+
+:root[data-theme='brutalist'] .blog-filter > input,
+:root[data-theme='brutalist'] .blog-filter > input + span {
+  top: 0;
+  width: 22px;
+  height: 22px;
+}
+
+:root[data-theme='brutalist'] .blog-filter > input + span {
+  border: var(--bx-border-thin);
+  background-color: var(--bx-paper);
+  background-size: 12px 12px;
+}
+
+:root[data-theme='brutalist'] .blog-filter > input:checked + span {
+  background-color: var(--bx-accent);
+}
+
+:root[data-theme='brutalist'] .blog-filter > input ~ span:last-child {
+  padding: 1px;
+  border: 0;
+  font: 600 13.5px / 1.5 var(--bx-mono);
+}
+
+:root[data-theme='brutalist'] .blog-filter > input:focus-visible ~ span:last-child {
+  outline: 3px solid var(--bx-ink);
+  outline-offset: 2px;
+}
+
+:root[data-theme='brutalist'] .blog-tags {
+  gap: 9px;
+  margin: 12px 0 22px;
+}
+
+/* a tag is pushed in and coloured while it is the one filtering */
+:root[data-theme='brutalist'] .blog-tags > .blog-tag {
+  --r95-color-material: var(--bx-paper);
+  padding: 3px 9px;
+  font-size: 12px;
+  box-shadow: 2px 2px 0 0 var(--bx-ink);
+}
+
+:root[data-theme='brutalist'] .blog-tags > .blog-tag:active,
+:root[data-theme='brutalist'] .blog-tags > .blog-tag[aria-pressed='true'] {
+  padding: 3px 9px;
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--bx-ink);
+}
+
+:root[data-theme='brutalist'] .blog-tags > .blog-tag[aria-pressed='true'] {
+  background-color: var(--bx-accent);
+}
+
+/* every post is a card */
+:root[data-theme='brutalist'] .notepad__page .blog-posts {
+  padding-left: 0;
+  list-style: none;
+}
+
+:root[data-theme='brutalist'] .blog-posts > li {
+  margin-bottom: 18px;
+  padding: 16px 18px 6px;
+  border: var(--bx-border-thin);
+  box-shadow: var(--bx-shadow-sm);
+}
+
+:root[data-theme='brutalist'] .blog-posts > li > h3 > a {
+  text-decoration: none;
+}
+
+/* date, reading time and tags */
+:root[data-theme='brutalist'] .blog-posts > li > p:first-of-type {
+  font: 600 12.5px / 1.6 var(--bx-mono);
+}
+
+/* ---------- a post ---------- */
+
+:root[data-theme='brutalist'] .post-body {
+  line-height: 1.65;
+}
+
+:root[data-theme='brutalist'] .post-body h2 {
+  margin-top: 28px;
+  font-size: 22px;
+}
+
+:root[data-theme='brutalist'] .post-body h3 {
+  margin-top: 22px;
+  font-size: 18px;
+}
+
+:root[data-theme='brutalist'] .post-body :is(pre, pre *, code) {
+  font-family: var(--bx-mono);
+  font-size: 13.5px;
+}
+
+:root[data-theme='brutalist'] .post-body pre {
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  border: 0;
+  background: var(--bx-code-bg);
+  color: var(--bx-ground);
+}
+
+:root[data-theme='brutalist'] .post-body :not(pre) > code {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--bx-ink);
+  background: var(--bx-ground);
+}
+
+:root[data-theme='brutalist'] .post-body blockquote {
+  margin: 16px 0;
+  padding: 12px 16px 1px;
+  border: var(--bx-border-thin);
+  border-left-width: 8px;
+  background: color-mix(in srgb, var(--bx-accent) 30%, var(--bx-paper));
+}
+
+:root[data-theme='brutalist'] .post-body img {
+  border: var(--bx-border-thin);
+}
+
+/* ---------- taskbar ---------- */
+
+:root[data-theme='brutalist'] .taskbar {
+  /* the button of the window in front */
+  --r95-color-borderLighter: var(--bx-accent);
+  align-items: stretch;
+  gap: 8px;
+  height: var(--bx-taskbar);
+  padding: 7px 8px;
+  border-top: var(--bx-border);
+  background: var(--bx-paper);
+  box-shadow: none;
+}
+
+:root[data-theme='brutalist'] .taskbar button {
+  flex: none;
+  max-width: 200px;
+  min-width: 0;
+  margin: 0;
+  padding: 3px 10px;
+  box-shadow: 2px 2px 0 0 var(--bx-ink);
+}
+
+:root[data-theme='brutalist'] .taskbar button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--bx-ink);
+}
+
+/* the icon, then the title of the window on one line */
+:root[data-theme='brutalist'] .taskbar button > div:first-child {
+  display: flex;
+}
+
+:root[data-theme='brutalist'] .taskbar button > div:last-child:not(:first-child) {
+  display: block;
+  overflow: hidden;
+  font: 700 13px / 1.2 var(--bx-mono);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:root[data-theme='brutalist'] .taskbar button svg {
+  width: 18px;
+  height: 18px;
+  margin: 0 6px 0 0;
+}
+
+/* the start button while its menu is open */
+:root[data-theme='brutalist'] .taskbar > div + button {
+  padding: 3px 10px;
+  background-color: var(--bx-accent);
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--bx-ink);
+}
+
+/* the buttons of the open windows share what is left of the bar */
+:root[data-theme='brutalist'] .taskbar > div:nth-last-child(2) {
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+}
+
+:root[data-theme='brutalist'] .taskbar > div:nth-last-child(2) > button {
+  flex: 0 1 auto;
+  width: auto;
+  max-width: 250px;
+}
+
+/* the clock */
+:root[data-theme='brutalist'] .taskbar > div:last-child {
+  flex: none;
+  padding: 0 10px;
+  border: var(--bx-border-thin);
+}
+
+:root[data-theme='brutalist'] .taskbar > div:last-child * {
+  font: 700 13px / 1 var(--bx-mono);
+}
+
+/* ---------- start menu ---------- */
+
+:root[data-theme='brutalist'] .taskbar > div:has(> .start-menu) {
+  bottom: calc(var(--bx-taskbar) + 6px);
+  left: 8px;
+}
+
+:root[data-theme='brutalist'] .taskbar .start-menu {
+  width: 250px;
+  padding: 4px;
+  border: var(--bx-border);
+  box-shadow: var(--bx-shadow);
+}
+
+:root[data-theme='brutalist'] .start-menu > li.pointer {
+  padding: 8px 12px;
+}
+
+:root[data-theme='brutalist'] .start-menu > li.pointer::after {
+  content: none;
+}
+
+:root[data-theme='brutalist'] .start-menu > li.pointer:hover {
+  background: var(--bx-accent);
+  color: var(--bx-ink);
+}
+
+:root[data-theme='brutalist'] .start-menu a {
+  font: 600 13px / 1.4 var(--bx-mono);
+}
+
+/* the dividers between the entries */
+:root[data-theme='brutalist'] .start-menu > li:not(.pointer) {
+  width: auto;
+  height: 0;
+  margin: 4px 0;
+  border-top: var(--bx-border-thin);
+  border-bottom: 0;
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 849px) {
+  :root[data-theme='brutalist'] {
+    --bx-shadow: 5px 5px 0 0 var(--bx-ink);
+  }
+
+  :root[data-theme='brutalist'] .notepad__page {
+    padding: 18px 16px;
+  }
+
+  :root[data-theme='brutalist'] .notepad__page h2 {
+    font-size: 24px;
+  }
+
+  :root[data-theme='brutalist'] .taskbar {
+    gap: 6px;
+    padding-inline: 6px;
+  }
+
+  :root[data-theme='brutalist'] .taskbar button {
+    padding-inline: 7px;
+  }
+
+  :root[data-theme='brutalist'] .taskbar > div:nth-last-child(2) {
+    gap: 6px;
+  }
+
+  /* four file names do not fit side by side in the monospaced face */
+  :root[data-theme='brutalist'] .file > span {
+    padding-inline: 2px;
+    font: 700 12.5px / 1.5 var(--bx-sans);
+  }
+
+  /* the explorer opens right next to its shortcut */
+  :root[data-theme='brutalist'] .shortcut {
+    margin-left: 6px;
+  }
+
+  :root[data-theme='brutalist'] .shortcut > div {
+    padding-inline: 4px;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme='brutalist'] * {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -24,7 +24,7 @@ export default function Item({ item, openNotepad }) {
   const {name, icon } = item;
   const Icon  = Icons[icon] || Inetcfg2301;
   return (
-    <StyledItem onClick={() => openNotepad(item)}>
+    <StyledItem className="file" onClick={() => openNotepad(item)}>
       <Icon
         className="pointer"
       />

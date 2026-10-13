@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { TaskBar, List } from '@react95/core'
 import styled from 'styled-components'
 import { Context } from '../services/data'
+import { THEMES, setTheme, useTheme } from '../services/theme'
 import rightCaret from '../assets/win95/pattern/rightcaret.svg'
 
 const Link = styled.a`
@@ -55,10 +56,22 @@ const StartMenuItem = styled(List.Item)`
 
 function Taskbar() {
   const { projectRepo, react95Repo, original } = useContext(Context).getProjectInfo();
+  // the start menu offers the theme that is not on
+  const theme = useTheme();
+  const otherTheme = Object.keys(THEMES).find((name) => name !== theme);
+  const switchTheme = (event) => {
+    event.preventDefault();
+    setTheme(otherTheme);
+  };
   return (
     <StyledTaskBar
+      className="taskbar"
       list={
-        <StartMenu>
+        <StartMenu className="start-menu">
+          <StartMenuItem className="pointer">
+            <Link href={`?theme=${otherTheme}`} onClick={switchTheme}>{THEMES[otherTheme].label} theme</Link>
+          </StartMenuItem>
+          <List.Divider />
           <StartMenuItem className="pointer">
             <Link href={react95Repo} target="_blank">Built with React95</Link>
           </StartMenuItem>

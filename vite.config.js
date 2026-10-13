@@ -19,7 +19,7 @@ export default defineConfig({
     globals: true,
     setupFiles: './src/setupTests.js',
     exclude: [...configDefaults.exclude, '.claude/**'],
-    // both ship ESM that Node can't load as-is (CSS imports, extensionless re-exports)
-    server: { deps: { inline: ['@react95/core', '@react95/icons'] } },
+    // these ship files that Node can't load as-is (CSS imports, extensionless re-exports)
+    server: { deps: { inline: ['@react95/core', '@react95/icons', /@fontsource-variable/] } },
   },
 });

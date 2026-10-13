@@ -97,7 +97,7 @@ export default function BlogPost({ id, username, blog, closePost }) {
       {(isPending || body === null) && <DefragSpinner/>}
       {body !== null && (
         <>
-          <Body lang={post.language} dangerouslySetInnerHTML={{ __html: body }}/>
+          <Body className="post-body" lang={post.language} dangerouslySetInnerHTML={{ __html: body }}/>
           <hr />
           <p>{readMore}</p>
           {back}

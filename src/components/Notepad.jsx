@@ -13,11 +13,12 @@ function Notepad({ closeNotepad, selectedItem, isMobile }) {
       icon={icon}
       title={ `Notepad - ${ selectedItem.name }` }
       closeModal={ closeNotepad }
+      data-file={ selectedItem.id }
       buttons={ [{ value: "Close", onClick: closeNotepad }] }
       style={ {
         left: isMobile ? '5%' : '50%',
         top: isMobile ? '35%' : '15%',
-        width: isMobile ? '90%' : 450,
+        width: isMobile ? '90%' : 'var(--notepad-width, 450px)',
       } }
       menu={ [
         { name: 'File', list: [] },
@@ -26,14 +27,18 @@ function Notepad({ closeNotepad, selectedItem, isMobile }) {
       <Frame
         // a new frame per file, so each one opens at the top instead of where the last one was scrolled to
         key={ selectedItem.id }
+        className="notepad__page"
         bg="white"
         boxShadow="$in"
         height="100%"
         padding="$20"
         style={ {
           overflowY: "auto",
-          // on mobile the window starts lower, so its text has to end sooner to stay above the taskbar
-          maxHeight: isMobile ? "calc(65dvh - 127px)" : "60vh",
+          // on mobile the window starts lower, so its text has to end sooner to stay above the taskbar;
+          // themes with a taller window frame set their own limits
+          maxHeight: isMobile
+            ? "var(--notepad-max-height-mobile, calc(65dvh - 127px))"
+            : "var(--notepad-max-height, 60vh)",
         } }
       >
         <ContentFactory id={ selectedItem.id }/>

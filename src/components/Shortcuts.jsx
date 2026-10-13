@@ -9,7 +9,7 @@ const StyledShorcut = styled.div`
 function Shortcuts({ openExplorer }) {
   return (
     <div>
-      <StyledShorcut onClick={() => openExplorer()}>
+      <StyledShorcut className="shortcut" onClick={() => openExplorer()}>
         <WindowsExplorer
           className="pointer"
         />

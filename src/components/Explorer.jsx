@@ -31,6 +31,7 @@ function Explorer({ items, closeExplorer, openNotepad, isMobile }) {
         { name: 'Help', list: [] },
       ]}>
       <Frame
+        className="explorer__files"
         bg="white"
         boxShadow="$in"
         height="100%"

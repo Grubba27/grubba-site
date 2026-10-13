@@ -37,6 +37,10 @@ const Tag = styled(Button)`
   }
 `
 
+const Posts = styled.ul`
+  padding-left: 1rem;
+`
+
 const Actions = styled.p`
   display: flex;
   align-items: center;
@@ -89,17 +93,18 @@ export default function BlogList({ username, blog, openPost, filters, setFilters
     <>
       {organizations.length > 0 && (
         <Filter
+          className="blog-filter"
           checked={filters.organizations}
           onChange={(event) => setFilters({ ...filters, organizations: event.target.checked })}
         >
           Include the posts I wrote for the {organizations.join(' and ')} blog
         </Filter>
       )}
-      <Tags>
+      <Tags className="blog-tags">
         {tags.map((name) => (
           <Tag
             key={name}
-            className="pointer"
+            className="pointer blog-tag"
             aria-pressed={name === tag}
             onClick={() => setFilters({ ...filters, tag: name === tag ? null : name })}
           >
@@ -107,11 +112,7 @@ export default function BlogList({ username, blog, openPost, filters, setFilters
           </Tag>
         ))}
       </Tags>
-      <ul
-        style={{
-          paddingLeft: "1rem",
-        }}
-      >
+      <Posts className="blog-posts">
         {posts.map(
           (post) => (
             <li key={post.id}>
@@ -140,7 +141,7 @@ export default function BlogList({ username, blog, openPost, filters, setFilters
             </li>
           )
         )}
-      </ul>
+      </Posts>
     </>
   );
 

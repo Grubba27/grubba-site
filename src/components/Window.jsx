@@ -73,9 +73,11 @@ const dragOptions = {
   },
 };
 
-function Window({ icon, title, closeModal, buttons = [], menu, style, children }) {
+function Window({ icon, title, closeModal, buttons = [], menu, style, children, ...rest }) {
   return (
     <StyledModal
+      {...rest}
+      className="window"
       icon={icon}
       title={title}
       dragOptions={dragOptions}
@@ -85,10 +87,10 @@ function Window({ icon, title, closeModal, buttons = [], menu, style, children }
       ]}
       menu={menu}
       style={style}>
-      <Content>{children}</Content>
+      <Content className="window__content">{children}</Content>
       {
         buttons.length > 0 && (
-          <Buttons>
+          <Buttons className="window__buttons">
             {
               buttons.map(({ value, onClick }) => (
                 <Button key={value} onClick={onClick}>{value}</Button>
