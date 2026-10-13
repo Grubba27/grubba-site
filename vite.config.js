@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  // two pages: the site, and the deactivated-picture maker with a <head> of its own for link previews
+  input: { main: 'index.html', deactivated: 'deactivated.html' },
   build: {
     rolldownOptions: {
       treeshake: {

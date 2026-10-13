@@ -9,5 +9,13 @@
       "permanent": false
     }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "deactivated.grubba.dev" }],
+      "destination": "/deactivated.html"
+    },
+    { "source": "/deactivated", "destination": "/deactivated.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

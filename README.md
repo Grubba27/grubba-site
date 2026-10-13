@@ -39,4 +39,4 @@ Each theme has its icons in `public/icons`, and the tab changes to them with the
 
 Vercel builds and deploys every push to `master`. `vercel.json` sets the framework and sends every path to `index.html`, since the open file and blog post live in the URL (`/resume`, `/blog/123`, ...).
 
-`deactivated.grubba.dev` is the same deployment: the domain is added to the Vercel project (Settings, Domains) and `src/skins.js` picks the maker by host name. Until the domain is added, the maker is reachable at `/deactivated` on any deployment, previews included.
+`deactivated.grubba.dev` is the same deployment, with the domain added to the Vercel project (Settings, Domains). `vercel.json` sends that host, and the `/deactivated` path on any other, to `deactivated.html`: a second page with its own title, description and link-preview image (`public/deactivated-og.png`), since link previews never run the skin switch. The skin switch in `src/skins.js` still picks the maker for that host and path when `index.html` is what got served, as on the dev server.
