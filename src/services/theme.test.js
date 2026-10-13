@@ -7,7 +7,7 @@ beforeEach(() => {
   window.localStorage.clear();
   window.history.replaceState({}, '', '/');
   delete document.documentElement.dataset.theme;
-  // what index.html comes with
+  // what site.html comes with
   document.head.innerHTML = `
     <link rel="icon" href="/favicon.ico"/>
     <link rel="apple-touch-icon" href="/icons/win95-192.png"/>
@@ -81,7 +81,7 @@ test('an icon that is already shown is left alone', async () => {
   expect(iconLink('apple-touch-icon')).toBe(touchIcon);
 });
 
-// a path that isn't a file gets index.html from the server, which no browser draws as an icon
+// a path that isn't a file gets site.html from the server, which no browser draws as an icon
 test('the icons of every theme are files of the site', () => {
   const icons = Object.values(THEMES).flatMap(({ icon, touchIcon }) => [icon, touchIcon]);
 
