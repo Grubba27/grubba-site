@@ -30,11 +30,16 @@ const remember = (name) => {
   }
 };
 
-/** The theme asked for in the URL (?theme=brutalist), else the one picked before, else Windows 95. */
-export const getInitialTheme = () => {
-  const asked = new URLSearchParams(window.location.search).get('theme');
+/**
+ * The theme to open the site with. An address says it first: ?theme=brutalist in the URL,
+ * or a subdomain named after a theme (brutalist.grubba.dev). Otherwise it is the one
+ * picked on an earlier visit, and Windows 95 for everybody else.
+ */
+export const getInitialTheme = ({ search, hostname } = window.location) => {
+  const asked = new URLSearchParams(search).get('theme');
+  const [subdomain] = hostname.split('.');
 
-  return [asked, remembered()].find(isTheme) ?? DEFAULT_THEME;
+  return [asked, subdomain, remembered()].find(isTheme) ?? DEFAULT_THEME;
 };
 
 const listeners = new Set();

@@ -24,6 +24,15 @@ test('a theme in the URL comes before the one picked earlier', () => {
   expect(getInitialTheme()).toBe('win95');
 });
 
+test('a subdomain named after a theme opens the site in it', () => {
+  window.localStorage.setItem('theme', 'win95');
+
+  expect(getInitialTheme({ search: '', hostname: 'brutalist.grubba.dev' })).toBe('brutalist');
+  expect(getInitialTheme({ search: '?theme=win95', hostname: 'brutalist.grubba.dev' })).toBe('win95');
+  expect(getInitialTheme({ search: '', hostname: 'grubba.dev' })).toBe('win95');
+  expect(getInitialTheme({ search: '', hostname: 'www.grubba.dev' })).toBe('win95');
+});
+
 test('ignores themes that do not exist', () => {
   window.localStorage.setItem('theme', 'vaporwave');
   window.history.replaceState({}, '', '/?theme=toString');

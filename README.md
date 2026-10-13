@@ -24,7 +24,7 @@ npm run lint     # ESLint
 
 ## Themes
 
-The desktop has two looks, picked from the Start menu and remembered in the browser (`?theme=brutalist` or `?theme=win95` in the URL also works):
+The desktop has two looks, picked from the Start menu and remembered in the browser. An address can pick one too: `?theme=brutalist` in the URL, or a subdomain named after the theme (`brutalist.grubba.dev`, once that domain is added to the Vercel project).
 
 - **Windows 95** is what the components look like by themselves, and the default.
 - **Neo-brutalist** is `src/themes/brutalist.css`: one stylesheet scoped to `:root[data-theme='brutalist']`, loaded only for the visitors who pick it. It repaints the same windows, taskbar and files, so every feature exists in both.
