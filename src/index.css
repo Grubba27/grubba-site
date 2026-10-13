@@ -99,6 +99,7 @@ html, * {
   cursor: url('./assets/win95/cursors/Arrow.png'), auto;
 }
 
-.pointer, :any-link {
+/* the descendants too: every element gets the arrow from the rule above, an icon's shapes included */
+.pointer, .pointer *, :any-link {
   cursor: url('./assets/win95/cursors/HandPointer.png'), pointer;
 }
