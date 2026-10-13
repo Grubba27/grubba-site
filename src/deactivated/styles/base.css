@@ -1,0 +1,229 @@
+/*
+ * Reset, document rules and the shared building blocks (pressable surfaces,
+ * buttons, tags, links). Only this page imports this file, so the element
+ * selectors below never meet the Windows 95 skin.
+ *
+ * Copied from the first neo-brutalist draft of the blog; the site's own theme keeps
+ * its version inside src/themes/brutalist.css, so this page carries its own copy.
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  background: var(--bx-ground);
+  color: var(--bx-ink);
+  font-family: var(--bx-font-sans);
+  font-size: var(--bx-text-md);
+  line-height: var(--bx-leading);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+blockquote,
+pre {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--bx-ink);
+  color: var(--bx-ground);
+}
+
+:focus-visible {
+  outline: var(--bx-border-width) solid var(--bx-ink);
+  outline-offset: 3px;
+}
+
+/* ---------- shell ---------- */
+
+.bx-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Themes: each one overrides tokens for the page it is set on (data-theme on .bx-app).
+   .bx-app paints its own ground, since the body is outside of it and would keep the default. */
+.bx-app[data-theme='tech'] {
+  --bx-accent: var(--bx-file-blog);
+}
+
+.bx-app {
+  background: var(--bx-ground);
+  color: var(--bx-ink);
+}
+
+.bx-wrap {
+  width: 100%;
+  max-width: calc(var(--bx-page-width) + 2 * var(--bx-gutter));
+  margin-inline: auto;
+  padding-inline: var(--bx-gutter);
+}
+
+.bx-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.bx-skip {
+  position: absolute;
+  top: var(--bx-space-3);
+  left: var(--bx-gutter);
+  z-index: 10;
+  padding: var(--bx-space-2) var(--bx-space-4);
+  background: var(--bx-ink);
+  color: var(--bx-paper);
+  font: var(--bx-weight-bold) var(--bx-text-sm) / 1.4 var(--bx-font-mono);
+  text-decoration: none;
+  transform: translateY(-300%);
+}
+
+.bx-skip:focus {
+  transform: none;
+}
+
+/* ---------- pressable surfaces: a hard shadow means "you can click this" ---------- */
+
+.bx-press {
+  --bx-lift: var(--bx-shadow-sm);
+  box-shadow: var(--bx-lift) var(--bx-lift) 0 0 var(--bx-ink);
+  transition:
+    transform var(--bx-press) ease-out,
+    box-shadow var(--bx-press) ease-out,
+    background-color var(--bx-press) ease-out;
+}
+
+@media (hover: hover) {
+  .bx-press:hover {
+    transform: translate(calc(var(--bx-lift) / 2), calc(var(--bx-lift) / 2));
+    box-shadow: calc(var(--bx-lift) / 2) calc(var(--bx-lift) / 2) 0 0 var(--bx-ink);
+  }
+}
+
+.bx-press:active {
+  transform: translate(var(--bx-lift), var(--bx-lift));
+  box-shadow: 0 0 0 0 var(--bx-ink);
+}
+
+.bx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.7rem 1.1rem;
+  border: var(--bx-border);
+  border-radius: var(--bx-radius);
+  background: var(--bx-accent);
+  color: var(--bx-ink);
+  font: var(--bx-weight-bold) var(--bx-text-sm) / 1.25 var(--bx-font-mono);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.bx-btn--plain {
+  background: var(--bx-paper);
+}
+
+.bx-icon {
+  flex: none;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+/* ---------- tags: flat stickers, never interactive ---------- */
+
+.bx-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.bx-tag {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border: var(--bx-border-thin) solid var(--bx-ink);
+  border-radius: var(--bx-radius);
+  background: var(--bx-paper);
+  font: 600 var(--bx-text-xs) / 1.5 var(--bx-font-mono);
+  white-space: nowrap;
+}
+
+.bx-tag--accent {
+  background: var(--bx-accent);
+}
+
+/* ---------- text ---------- */
+
+.bx-link {
+  text-decoration: underline;
+  text-decoration-thickness: var(--bx-border-thin);
+  text-underline-offset: 0.2em;
+}
+
+@media (hover: hover) {
+  .bx-link:hover {
+    background: var(--bx-accent);
+  }
+}
+
+.bx-label {
+  font: var(--bx-weight-bold) var(--bx-text-xs) / 1.4 var(--bx-font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* highlighter stroke behind a run of text */
+.bx-mark {
+  background: linear-gradient(transparent 56%, var(--bx-accent) 56% 94%, transparent 94%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -17,6 +17,8 @@ npm run lint     # ESLint
 
 ## Where things are
 
+- `src/index.jsx` picks the skin for the URL (`src/skins.js`): the Windows 95 desktop for the site, or the deactivated-picture maker for `/deactivated` and for `deactivated.grubba.dev`.
+- `src/deactivated` is that maker: `render.js` crops, greys and letters the picture on a canvas in the visitor's browser (nothing is uploaded), `Maker.jsx` holds the controls and `Preview.jsx` shows the result in the shape the chosen platform gives pictures. Its `styles/` carry their own copy of the neo-brutalist tokens and page chrome (the desktop's theme keeps its own inside `src/themes/brutalist.css`, scoped to that theme).
 - `src/services/data` holds the content of each file on the desktop (About, Resume, Contact, Blog).
 - `src/components` has the desktop, the windows and the taskbar; `src/components/NotepadContent` is what the Notepad shows for each file.
 - `src/index.css` and `src/assets/win95` keep the look of React95 2.x (font, cursors, scrollbars), which later versions changed.
@@ -34,3 +36,5 @@ A new theme is another stylesheet scoped the same way plus an entry in `src/serv
 ## Deployment
 
 Vercel builds and deploys every push to `master`. `vercel.json` sets the framework and sends every path to `index.html`, since the open file and blog post live in the URL (`/resume`, `/blog/123`, ...).
+
+`deactivated.grubba.dev` is the same deployment: the domain is added to the Vercel project (Settings, Domains) and `src/skins.js` picks the maker by host name. Until the domain is added, the maker is reachable at `/deactivated` on any deployment, previews included.

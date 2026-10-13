@@ -1,0 +1,110 @@
+/*
+ * Page chrome: header, the sheet and the footer.
+ *
+ * Copied from the first neo-brutalist draft of the blog, without its file tabs; the
+ * site's own theme keeps its version inside src/themes/brutalist.css, so this page
+ * carries its own copy.
+ */
+
+/* ---------- header ---------- */
+
+.bx-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--bx-space-5) var(--bx-space-7);
+  padding-block: clamp(1.75rem, 5vw, 3.5rem) clamp(1.5rem, 3.6vw, 2.75rem);
+}
+
+.bx-header__name {
+  font-size: var(--bx-text-hero);
+  font-weight: var(--bx-weight-black);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.bx-header__role {
+  max-width: 46ch;
+  margin-top: var(--bx-space-4);
+  font-size: var(--bx-text-lg);
+  font-weight: 500;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+/* ---------- sheet ---------- */
+
+.bx-desk {
+  flex: 1;
+}
+
+.bx-sheet {
+  position: relative;
+  z-index: 1;
+  border: var(--bx-border);
+  border-radius: var(--bx-radius);
+  background: var(--bx-paper);
+  box-shadow: var(--bx-shadow-lg) var(--bx-shadow-lg) 0 0 var(--bx-ink);
+  scroll-margin-top: var(--bx-space-4);
+}
+
+/* the title bar of the sheet: the name of the file */
+.bx-sheet__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--bx-space-1) var(--bx-space-4);
+  padding: var(--bx-space-2) var(--bx-sheet-padding);
+  border-bottom: var(--bx-border);
+  background: var(--bx-accent);
+  font: 500 var(--bx-text-xs) / 1.5 var(--bx-font-mono);
+  transition: background-color var(--bx-press) ease-out;
+}
+
+.bx-sheet__body {
+  padding: var(--bx-sheet-padding);
+}
+
+.bx-sheet:focus-visible {
+  outline: none;
+}
+
+.bx-sheet:focus-visible > .bx-sheet__body {
+  outline: var(--bx-border-width) solid var(--bx-ink);
+  outline-offset: calc(-3 * var(--bx-border-width));
+}
+
+/* ---------- footer ---------- */
+
+.bx-footer {
+  margin-top: var(--bx-space-8);
+  padding-bottom: var(--bx-space-6);
+}
+
+.bx-footer__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--bx-space-2) var(--bx-space-6);
+  padding-top: var(--bx-space-4);
+  border-top: var(--bx-border);
+  font: 500 var(--bx-text-xs) / 1.6 var(--bx-font-mono);
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 52rem) {
+  .bx-header {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+    gap: var(--bx-space-4);
+  }
+}
+
+@media (max-width: 40rem) {
+  .bx-header__role {
+    margin-top: var(--bx-space-3);
+    font-size: var(--bx-text-md);
+  }
+}

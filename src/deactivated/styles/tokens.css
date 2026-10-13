@@ -1,0 +1,86 @@
+/*
+ * Design tokens of the neo-brutalist skin: palette, type, border weight, shadow
+ * offsets, radii and spacing. Nothing else in the skin has a colour or a size of
+ * its own, so a theme is a block that overrides some of these (see base.css).
+ * Black text sits on every colour below at 8:1 or better; never put white on them.
+ *
+ * Copied from the first neo-brutalist draft of the blog. The site's own neo-brutalist
+ * theme keeps these tokens inside src/themes/brutalist.css, scoped to that theme, so this
+ * page carries its own copy; keep the values in step when one of them changes.
+ */
+:root {
+  color-scheme: light;
+
+  /* palette */
+  --bx-ink: #111111;
+  --bx-ground: #f4f0e6;
+  --bx-paper: #ffffff;
+  --bx-yellow: #ffd23f;
+  --bx-pink: #ff90b3;
+  --bx-green: #6fe3a1;
+  --bx-blue: #86b6ff;
+  --bx-lilac: #c7b0ff;
+
+  /* the colour of each file's tab; --bx-accent tints everything else and comes from the theme */
+  --bx-file-about: var(--bx-yellow);
+  --bx-file-resume: var(--bx-pink);
+  --bx-file-contact: var(--bx-green);
+  --bx-file-blog: var(--bx-blue);
+  --bx-accent: var(--bx-blue);
+
+  /* code blocks */
+  --bx-code-bg: #16161a;
+  --bx-code-ink: #f4f0e6;
+  --bx-code-comment: #b3ada0;
+
+  /* type */
+  --bx-font-sans: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --bx-font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas,
+    'Liberation Mono', monospace;
+  --bx-text-xs: 0.8125rem;
+  --bx-text-sm: 0.9375rem;
+  --bx-text-md: 1.125rem;
+  --bx-text-lg: clamp(1.1875rem, 1.05rem + 0.6vw, 1.4375rem);
+  --bx-text-xl: clamp(1.5rem, 1.2rem + 1.3vw, 2.125rem);
+  --bx-text-2xl: clamp(1.875rem, 1.25rem + 2.7vw, 3.25rem);
+  --bx-text-hero: clamp(3.25rem, 1.9rem + 6.6vw, 7rem);
+  --bx-leading: 1.6;
+  --bx-weight-bold: 700;
+  --bx-weight-black: 800;
+  --bx-measure: 66ch;
+
+  /* structure */
+  --bx-border-width: 3px;
+  --bx-border-thin: 2px;
+  --bx-border-hair: 1px;
+  --bx-border: var(--bx-border-width) solid var(--bx-ink);
+  --bx-radius: 0px;
+  --bx-shadow-sm: 4px;
+  --bx-shadow-md: 6px;
+  --bx-shadow-lg: 10px;
+
+  /* spacing */
+  --bx-space-1: 0.25rem;
+  --bx-space-2: 0.5rem;
+  --bx-space-3: 0.75rem;
+  --bx-space-4: 1rem;
+  --bx-space-5: 1.5rem;
+  --bx-space-6: 2rem;
+  --bx-space-7: 3rem;
+  --bx-space-8: 4rem;
+  --bx-gutter: clamp(1rem, 4vw, 2.5rem);
+  --bx-page-width: 70rem;
+  --bx-sheet-padding: clamp(1.25rem, 4.2vw, 3rem);
+
+  /* motion */
+  --bx-press: 110ms;
+}
+
+@media (max-width: 40rem) {
+  :root {
+    --bx-text-md: 1.0625rem;
+    --bx-shadow-md: 4px;
+    --bx-shadow-lg: 6px;
+  }
+}

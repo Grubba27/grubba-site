@@ -1,0 +1,360 @@
+/* The deactivated-picture maker: the controls on the left, the preview on the right. */
+
+.bx-app[data-theme='deactivated'] {
+  --bx-accent: var(--bx-yellow);
+}
+
+/* the sheet has no tabs over it here, so its name stays visible */
+.bx-sheet__title {
+  font-size: var(--bx-text-sm);
+  font-weight: var(--bx-weight-black);
+}
+
+.bx-maker {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  align-items: start;
+  gap: var(--bx-space-6) var(--bx-space-7);
+}
+
+.bx-maker__controls {
+  display: grid;
+  gap: var(--bx-space-6);
+}
+
+.bx-maker__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bx-space-3) var(--bx-space-4);
+  padding-top: var(--bx-space-5);
+  border-top: var(--bx-border);
+}
+
+/* a group of controls under a label; fieldsets lose their default frame */
+.bx-field {
+  display: grid;
+  gap: var(--bx-space-3);
+  justify-items: start;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.bx-field__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bx-space-3) var(--bx-space-4);
+}
+
+.bx-hint {
+  font: 500 var(--bx-text-xs) / 1.5 var(--bx-font-mono);
+  overflow-wrap: anywhere;
+}
+
+.bx-error {
+  padding: var(--bx-space-2) var(--bx-space-3);
+  border: var(--bx-border);
+  background: var(--bx-pink);
+  font: 600 var(--bx-text-sm) / 1.4 var(--bx-font-mono);
+}
+
+.bx-btn:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ---------- sliders: a bar with a square knob ---------- */
+
+.bx-slider {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) 3.25rem;
+  align-items: center;
+  gap: var(--bx-space-3);
+  width: 100%;
+  font: 600 var(--bx-text-sm) / 1.25 var(--bx-font-mono);
+}
+
+.bx-slider output {
+  font-weight: 500;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.bx-slider input {
+  width: 100%;
+  height: 1.5rem;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.bx-slider input:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.bx-slider input::-webkit-slider-runnable-track {
+  height: var(--bx-border-width);
+  background: var(--bx-ink);
+}
+
+.bx-slider input::-moz-range-track {
+  height: var(--bx-border-width);
+  background: var(--bx-ink);
+}
+
+.bx-slider input::-webkit-slider-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: calc((var(--bx-border-width) - 1.25rem) / 2);
+  appearance: none;
+  border: var(--bx-border);
+  border-radius: var(--bx-radius);
+  background: var(--bx-accent);
+  box-shadow: 2px 2px 0 0 var(--bx-ink);
+}
+
+.bx-slider input::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: var(--bx-border);
+  border-radius: var(--bx-radius);
+  background: var(--bx-accent);
+  box-shadow: 2px 2px 0 0 var(--bx-ink);
+}
+
+/* ---------- choices: radio buttons and checkboxes as stickers, pushed in when on ---------- */
+
+.bx-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bx-space-2) var(--bx-space-3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* a legend is laid out outside the flex flow; floating it makes it the first row */
+.bx-choices > legend {
+  float: left;
+  width: 100%;
+  margin-bottom: var(--bx-space-3);
+  padding: 0;
+}
+
+.bx-choice {
+  --bx-lift: var(--bx-shadow-sm);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border: var(--bx-border);
+  border-radius: var(--bx-radius);
+  background: var(--bx-paper);
+  font: 600 var(--bx-text-xs) / 1.5 var(--bx-font-mono);
+  cursor: pointer;
+  box-shadow: var(--bx-lift) var(--bx-lift) 0 0 var(--bx-ink);
+  transition:
+    transform var(--bx-press) ease-out,
+    box-shadow var(--bx-press) ease-out,
+    background-color var(--bx-press) ease-out;
+}
+
+/* the real control covers the sticker, so it stays clickable and focusable */
+.bx-choice input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.bx-choice:has(input:checked) {
+  background: var(--bx-accent);
+  box-shadow: 0 0 0 0 var(--bx-ink);
+  transform: translate(var(--bx-lift), var(--bx-lift));
+}
+
+.bx-choice:has(input:focus-visible) {
+  outline: var(--bx-border-width) solid var(--bx-ink);
+  outline-offset: 3px;
+}
+
+.bx-text {
+  display: block;
+  width: 100%;
+}
+
+.bx-text input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: var(--bx-border);
+  border-radius: var(--bx-radius);
+  background: var(--bx-paper);
+  color: inherit;
+  font: 600 var(--bx-text-sm) / 1.25 var(--bx-font-mono);
+}
+
+.bx-text input:disabled {
+  opacity: 0.4;
+}
+
+/* ---------- the preview: a profile and a message, in neutral chrome ---------- */
+
+.bx-preview {
+  position: sticky;
+  top: var(--bx-space-4);
+  display: grid;
+  gap: var(--bx-space-3);
+  justify-items: start;
+}
+
+.bx-card {
+  --bx-card-ink: #1d1c1d;
+  --bx-card-muted: #616061;
+  display: grid;
+  gap: var(--bx-space-5);
+  width: 100%;
+  padding: var(--bx-space-5);
+  border: var(--bx-border);
+  background: var(--bx-card-bg, #ffffff);
+  color: var(--bx-card-ink);
+  /* the chat apps the picture is for do not use the site's fonts */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
+  transition: background-color var(--bx-press) ease-out;
+}
+
+.bx-card[data-background='dark'] {
+  --bx-card-ink: #dbdee1;
+  --bx-card-muted: #949ba4;
+}
+
+.bx-card__profile {
+  display: grid;
+  gap: var(--bx-space-2);
+  justify-items: start;
+}
+
+.bx-avatar {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  overflow: hidden;
+  background: rgba(127, 127, 127, 0.18);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bx-avatar--big {
+  max-width: 100%;
+}
+
+.bx-avatar--small {
+  width: 36px;
+  height: 36px;
+}
+
+/* the platforms round their squares only a little */
+.bx-avatar--rounded {
+  border-radius: 4px;
+}
+
+.bx-avatar--circle {
+  border-radius: 50%;
+}
+
+.bx-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bx-avatar__empty {
+  font: 800 3rem / 1 var(--bx-font-sans);
+  opacity: 0.3;
+}
+
+.bx-card__name {
+  margin-top: var(--bx-space-2);
+  font-size: 1.375rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.bx-card__status {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border: 2px solid currentColor;
+  color: var(--bx-card-muted);
+  font: 600 0.8125rem / 1.5 var(--bx-font-mono);
+}
+
+.bx-message {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--bx-space-3);
+  padding-top: var(--bx-space-4);
+  border-top: 1px solid var(--bx-card-muted);
+}
+
+.bx-message__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5em;
+  line-height: 1.3;
+}
+
+.bx-message__head b {
+  font-weight: 800;
+}
+
+.bx-message__head span {
+  color: var(--bx-card-muted);
+  font-size: 0.875rem;
+}
+
+.bx-message__text {
+  overflow-wrap: anywhere;
+}
+
+/* ---------- footer ---------- */
+
+.bx-fine {
+  max-width: var(--bx-measure);
+  margin-bottom: var(--bx-space-4);
+  font-size: var(--bx-text-sm);
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 52rem) {
+  .bx-maker {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* the picture is what you came for: it goes first, and scrolls with the page */
+  .bx-preview {
+    position: static;
+    order: -1;
+  }
+}
+
+@media (max-width: 40rem) {
+  .bx-slider {
+    grid-template-columns: 3rem minmax(0, 1fr) 3rem;
+  }
+}
