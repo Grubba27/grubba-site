@@ -1,5 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
+  "redirects": [
+    {
+      "source": "/favicon.ico",
+      "has": [{ "type": "host", "value": "brutalist.grubba.dev" }],
+      "destination": "/icons/brutalist.png",
+      "permanent": false
+    }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

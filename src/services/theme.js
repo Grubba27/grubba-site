@@ -4,8 +4,18 @@ import { useSyncExternalStore } from 'react';
 // have by themselves; any other theme is a stylesheet scoped to :root[data-theme='<name>'],
 // loaded only for the visitors who pick it.
 export const THEMES = {
-  win95: { label: 'Windows 95', load: () => Promise.resolve() },
-  brutalist: { label: 'Neo-brutalist', load: () => import('../themes/brutalist') },
+  win95: {
+    label: 'Windows 95',
+    icon: '/icons/win95.ico',
+    touchIcon: '/icons/win95-192.png',
+    load: () => Promise.resolve(),
+  },
+  brutalist: {
+    label: 'Neo-brutalist',
+    icon: '/icons/brutalist.png',
+    touchIcon: '/icons/brutalist-192.png',
+    load: () => import('../themes/brutalist'),
+  },
 };
 
 export const DEFAULT_THEME = 'win95';
@@ -50,9 +60,31 @@ const subscribe = (listener) => {
   return () => listeners.delete(listener);
 };
 
-/** Paints the desktop with a theme and remembers it for the next visit. */
+// The link is replaced instead of edited, since not every browser notices a new href
+// on the one it already has.
+const showIcon = (rel, href) => {
+  const link = document.head.querySelector(`link[rel="${rel}"]`);
+  if (link?.getAttribute('href') === href) return;
+
+  const replacement = document.createElement('link');
+  replacement.rel = rel;
+  replacement.href = href;
+
+  if (link) link.replaceWith(replacement);
+  else document.head.append(replacement);
+};
+
+/** Paints the desktop with a theme, down to the icon of the tab, and remembers it for the next visit. */
 export const setTheme = async (name) => {
-  await THEMES[name].load();
+  const theme = THEMES[name];
+
+  // Ahead of the stylesheet, because Safari only takes the icon the page has when it finishes
+  // loading. It can still be too late for it: an address that is a theme's own gets the
+  // icon from the server instead (see vercel.json).
+  showIcon('icon', theme.icon);
+  showIcon('apple-touch-icon', theme.touchIcon);
+
+  await theme.load();
   current = name;
   document.documentElement.dataset.theme = name;
   remember(name);

@@ -26,12 +26,14 @@ npm run lint     # ESLint
 
 ## Themes
 
-The desktop has two looks, picked from the Start menu and remembered in the browser. An address can pick one too: `?theme=brutalist` in the URL, or a subdomain named after the theme (`brutalist.grubba.dev`, once that domain is added to the Vercel project).
+The desktop has two looks, picked from the Start menu and remembered in the browser. An address can pick one too: `?theme=brutalist` in the URL, or a subdomain named after the theme (`brutalist.grubba.dev`, which is a domain of the Vercel project).
 
 - **Windows 95** is what the components look like by themselves, and the default.
 - **Neo-brutalist** is `src/themes/brutalist.css`: one stylesheet scoped to `:root[data-theme='brutalist']`, loaded only for the visitors who pick it. It repaints the same windows, taskbar and files, so every feature exists in both.
 
 A new theme is another stylesheet scoped the same way plus an entry in `src/services/theme.js`. The class names the themes hang on (`window`, `taskbar`, `notepad__page`, `blog-tags`, ...) are set in the components and have no styles of their own.
+
+Each theme has its icons in `public/icons`, and the tab changes to them with the theme. Safari only takes the icon a page has when it finishes loading, which can be before the theme is applied, so the address of a theme doesn't count on that: `vercel.json` redirects `/favicon.ico`, the icon `index.html` starts with, to the theme's icon on `brutalist.grubba.dev`. Everywhere else `/favicon.ico` is the Windows 95 icon, the same picture as `icons/win95.ico`.
 
 ## Deployment
 
