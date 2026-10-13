@@ -34,6 +34,9 @@ function Notepad({ closeNotepad, selectedItem, isMobile }) {
         padding="$20"
         style={ {
           overflowY: "auto",
+          // a swipe past either end of the text stays here: on a phone the browser would otherwise
+          // hand it to the page, and keep moving the whole desktop on the next swipes
+          overscrollBehavior: "contain",
           // on mobile the window starts lower, so its text has to end sooner to stay above the taskbar;
           // themes with a taller window frame set their own limits
           maxHeight: isMobile

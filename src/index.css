@@ -11,6 +11,13 @@
   font-style: normal;
 }
 
+/* The desktop is the whole page and has nothing to scroll, but a phone would still let a swipe
+   drag it around, and pull to refresh. */
+html,
+body {
+  overscroll-behavior: none;
+}
+
 body {
   margin: 0;
   padding: 0;
