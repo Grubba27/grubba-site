@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 import { setTheme } from '../services/theme';
@@ -66,12 +66,13 @@ test('the start menu switches between the themes', async () => {
   await userEvent.click(screen.getByText('Start'));
   await userEvent.click(screen.getByRole('link', { name: 'Neo-brutalist theme' }));
 
-  expect(document.documentElement.dataset.theme).toBe('brutalist');
+  // a theme is applied once its stylesheet has loaded
+  await waitFor(() => expect(document.documentElement.dataset.theme).toBe('brutalist'));
   // same desktop, same files
   expect(screen.getAllByText('Notepad - About.txt').length).toBeGreaterThan(0);
 
   await userEvent.click(screen.getByText('Start'));
   await userEvent.click(await screen.findByRole('link', { name: 'Windows 95 theme' }));
 
-  expect(document.documentElement.dataset.theme).toBe('win95');
+  await waitFor(() => expect(document.documentElement.dataset.theme).toBe('win95'));
 });
