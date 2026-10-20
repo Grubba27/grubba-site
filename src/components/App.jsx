@@ -20,8 +20,9 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={ queryClient }>
     <Context.Provider value={ dataService }>
-      {/* theme="inherit": the comments pick up the skin's colours through the --gc-* tokens */}
-      <DiscourseComments forum={ FORUM_URL } headers={ forumHeaders } theme="inherit">
+      {/* theme="forum": the forum's palette, fonts and theme CSS apply underneath this site's
+          own --gc-* tokens and rules, which keep winning */}
+      <DiscourseComments forum={ FORUM_URL } headers={ forumHeaders } theme="forum">
         <BodyFontSizeOverride/>
 
         {/* comes first: the taskbar only lists the windows that open after it has mounted */}

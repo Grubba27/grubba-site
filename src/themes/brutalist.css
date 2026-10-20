@@ -661,6 +661,7 @@
   --gc-danger: #c00;
   --gc-radius: 0;
   --gc-shadow: var(--bx-shadow-sm);
+  color-scheme: light;
 }
 :root[data-theme='brutalist'] .post-comments .gc-root button {
   font-family: var(--bx-mono);

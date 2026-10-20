@@ -125,6 +125,8 @@ html, * {
   --gc-danger: #a00;
   --gc-radius: 0;
   --gc-shadow: var(--r95-shadow-out, inset -1px -1px #0a0a0a, inset 1px 1px #fff);
+  /* the desktop has no dark mode, so the forum's dark palette must not darken the native controls */
+  color-scheme: light;
 }
 .blog-post-comments { display: block; margin: 0.25rem 0 0.75rem; color: #4a4a4a; }
 /* the universal MS Sans Serif rule would restyle syntax-highlight spans inside code */
