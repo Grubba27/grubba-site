@@ -212,12 +212,28 @@
       </li>
     </ol>
 
-    <h2>How the forum knows the page</h2>
+    <h2>Which page is this?</h2>
     <p>
-      The element sends the page's own URL; the forum maps it to a topic, creating one (unlisted)
-      on the first visit. This page passes <code>url="https://grubba.dev/blog/1433307"</code> to
-      show the <a href="/blog/1433307">blog post</a>'s thread instead. <code>identifier</code>
-      sets a key of your own.
+      By default the element sends the page's URL: the <code>&lt;link rel="canonical"&gt;</code>
+      if there is one, else the address bar. The forum normalises it (https, lowercase, no
+      <code>#fragment</code>, no <code>utm_*</code> and other tracking params, no trailing slash),
+      so <code>/blog/1?utm_source=x#top</code> and <code>/blog/1</code> are one thread. It then
+      finds the topic for that key or creates one, unlisted until the first comment.
+    </p>
+    <pre><code>&lt;!-- default: this page's URL --&gt;
+&lt;discourse-comments forum="https://forum.grubba.dev"&gt;&lt;/discourse-comments&gt;
+
+&lt;!-- stable key: survives slug or domain changes (unique per site host, up to 100 chars) --&gt;
+&lt;discourse-comments forum="https://forum.grubba.dev" identifier="blog-1433307"&gt;&lt;/discourse-comments&gt;
+
+&lt;!-- another page's thread, for mirrors or a "discussion" page --&gt;
+&lt;discourse-comments forum="https://forum.grubba.dev" url="https://grubba.dev/blog/1433307"&gt;&lt;/discourse-comments&gt;</code></pre>
+    <p>
+      In React the props are the same: <code>&lt;Comments identifier="blog-1433307" /&gt;</code>.
+      Adding an <code>identifier</code> to a page that already has comments is safe: it is linked
+      to the topic its URL already found. Mirrors on other hosts share threads through the forum's
+      host aliases setting; that is how brutalist.grubba.dev shows grubba.dev's comments. This page
+      uses the <code>url</code> form.
     </p>
 
     <h2>Who styles what</h2>
