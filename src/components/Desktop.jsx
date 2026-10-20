@@ -4,6 +4,7 @@ import Notepad from './Notepad';
 import Shortcuts from './Shortcuts';
 import { Context } from "../services/data";
 import { navigate, redirect, usePathname } from "../services/navigation";
+import { fileTitle } from "../services/seo";
 
 // the first segment of the URL is the open file: /resume, /blog/123
 const getItemByUrl = (data, pathname) => {
@@ -27,6 +28,12 @@ function Desktop() {
   useEffect(() => {
     if (pathname.split('/')[1] !== selectedItem.id) redirect(`/${ selectedItem.id }`);
   }, [pathname, selectedItem.id])
+
+  // the same title the page arrived with (src/services/seo.js); a post names its tab itself
+  const isPost = selectedItem.id === 'blog' && Boolean(pathname.split('/')[2]);
+  useEffect(() => {
+    if (!isPost) document.title = fileTitle(selectedItem.id);
+  }, [isPost, selectedItem.id])
   const closeExplorer = () => {
     toggleExplorer(false);
   };
