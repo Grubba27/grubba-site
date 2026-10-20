@@ -97,7 +97,7 @@ import "g-comments/styles.css";
     <pre><code>import { Comments, useCommenter, useThread } from "g-comments/react";
 
 const { thread, snapshot } = useThread({ url, sort: "newest" });
-// snapshot.comments, snapshot.count, thread.post({ body }), thread.like(id), thread.loadMore()
+// snapshot.comments, snapshot.thread.count, thread.post({ body }), thread.like(id), thread.loadMore()
 
 const me = useCommenter();
 // me.user, me.status, me.providers, me.signIn({ provider: "github" })
