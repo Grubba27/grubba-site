@@ -63,5 +63,62 @@
       theme="forum"
       url="https://grubba.dev/blog/1433307"
     ></discourse-comments>
+
+    <h2>Other ways to use it</h2>
+    <p>
+      The same package ships a React build, which is what the blog uses. One provider for the
+      forum, then a component wherever comments belong; the stylesheet is optional.
+    </p>
+    <pre><code>npm install g-comments</code></pre>
+    <pre><code>import { DiscourseComments, Comments, CommentCount } from "g-comments/react";
+import "g-comments/styles.css";
+
+&lt;DiscourseComments forum="https://forum.grubba.dev" theme="forum"&gt;
+  &lt;Comments /&gt;                                    {/* this page's own address */}
+  &lt;Comments url="https://grubba.dev/blog/1433307" /&gt; {/* a chosen thread */}
+  &lt;CommentCount url="https://grubba.dev/blog/1433307" /&gt;
+&lt;/DiscourseComments&gt;</code></pre>
+
+    <p>
+      To paint the comments yourself, set the <code>--gc-*</code> tokens in your CSS. Whatever the
+      site sets wins over the forum's theme, which wins over the defaults, so a site can take
+      the forum's look and override just a few things, as the blog's Windows 95 skin does.
+    </p>
+    <pre><code>.gc-root {
+  --gc-font: "MS Sans Serif", sans-serif;
+  --gc-accent: #000e7a;
+  --gc-radius: 0;
+}</code></pre>
+
+    <p>
+      For a layout of your own, the hooks give you the data and the actions and the primitives
+      give you the pieces:
+    </p>
+    <pre><code>import { Comments, useCommenter, useThread } from "g-comments/react";
+
+const { thread, snapshot } = useThread({ url, sort: "newest" });
+// snapshot.comments, snapshot.count, thread.post({ body }), thread.like(id), thread.loadMore()
+
+const me = useCommenter();
+// me.user, me.status, me.providers, me.signIn({ provider: "github" })
+
+&lt;Comments.Root url={url} signIn="manual"&gt;
+  &lt;Comments.Header&gt;&lt;Comments.Count /&gt;&lt;Comments.Sort /&gt;&lt;/Comments.Header&gt;
+  &lt;Comments.Composer /&gt;
+  &lt;Comments.List&gt;
+    {(comment, depth) =&gt; (
+      &lt;Comments.Item comment={comment} depth={depth}&gt;
+        &lt;Comments.Avatar /&gt;&lt;Comments.Body /&gt;&lt;Comments.Actions /&gt;
+      &lt;/Comments.Item&gt;
+    )}
+  &lt;/Comments.List&gt;
+&lt;/Comments.Root&gt;</code></pre>
+
+    <p>
+      The custom element takes the same options as attributes: <code>identifier</code> for a
+      stable key of your own, <code>sort</code>, <code>sign-in="inline|on-submit|manual"</code>,
+      <code>read-only</code>, <code>theme="auto|light|dark|inherit|forum"</code>, and
+      <code>&lt;discourse-comment-count url="…"&gt;</code> for lists of posts.
+    </p>
   </body>
 </html>
