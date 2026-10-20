@@ -45,6 +45,9 @@
       code {
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       }
+      ol li {
+        margin-bottom: 0.5rem;
+      }
 
       /* Example block: a theme switch, then Result / Code tabs. */
       .example {
@@ -189,6 +192,25 @@
         <pre><code id="code-react"></code></pre>
       </div>
     </div>
+
+    <h2>Make your own</h2>
+    <ol>
+      <li>
+        On a Discourse forum, install the <code>discourse-comments</code> plugin and allow your
+        site's host under Admin → Customize → Embedding (or set
+        <code>discourse_comments_allowed_origins</code> to <code>*</code> on a staging forum).
+      </li>
+      <li>
+        On the page, add the two lines from the Code tab: the script and
+        <code>&lt;discourse-comments forum="…"&gt;</code>. With React, <code>npm install g-comments</code>
+        and render <code>&lt;Comments /&gt;</code> inside <code>&lt;DiscourseComments forum="…"&gt;</code>.
+      </li>
+      <li>
+        That is it. Readers sign in through a popup on the forum, and each comment is a post in a
+        topic the forum creates for the page, so replies, likes, moderation and the review queue
+        are the forum's own.
+      </li>
+    </ol>
 
     <h2>How the forum knows the page</h2>
     <p>
