@@ -3,97 +3,219 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Comments, styled by the forum</title>
+    <title>Comments, three ways</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&family=JetBrains+Mono:wght@400;700&display=swap"
+    />
     <style>
-      /* Nothing on this page styles the comments: the forum's theme is all they get. */
+      @font-face {
+        font-family: "MS Sans Serif";
+        src: url("/assets/comments-demo/MS-Sans-Serif.woff2") format("woff2");
+        font-display: swap;
+      }
+
+      /* The page itself: nothing here reaches into the comments. */
       :root {
         color-scheme: light dark;
       }
       body {
-        max-width: 44rem;
+        max-width: 52rem;
         margin: 2rem auto;
         padding: 0 1rem;
         font-family: Georgia, "Times New Roman", serif;
         line-height: 1.5;
       }
+      h1 {
+        margin-bottom: 0.25rem;
+      }
+      p.lead {
+        margin-top: 0;
+        font-size: 1.1rem;
+      }
       pre {
         padding: 0.75rem 1rem;
         overflow: auto;
         font-size: 0.85rem;
+        line-height: 1.45;
         background: color-mix(in srgb, currentColor 8%, transparent);
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      /* Example block: a theme switch, then Result / Code tabs. */
+      .example {
+        margin: 2rem 0;
+        border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+      }
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem 1rem;
+        padding: 0.5rem 0.75rem;
+        border-bottom: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+        font-family: system-ui, sans-serif;
+        font-size: 0.9rem;
+      }
+      .bar button {
+        padding: 0.3rem 0.7rem;
+        border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+        border-radius: 999px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+      }
+      .switch {
+        display: flex;
+        gap: 0.35rem;
+      }
+      .switch button[aria-checked="true"] {
+        background: currentColor;
+      }
+      .switch button[aria-checked="true"] span {
+        color: Canvas;
+      }
+      .tabs {
+        display: flex;
+        gap: 0.35rem;
+      }
+      .tabs button {
+        border-radius: 4px;
+      }
+      .tabs button[aria-selected="true"] {
+        border-color: currentColor;
+        font-weight: 700;
+      }
+      [role="tabpanel"][hidden] {
+        display: none;
+      }
+      #panel-code {
+        padding: 0 1rem 1rem;
+      }
+      #panel-code h3 {
+        margin: 1rem 0 0.25rem;
+        font-family: system-ui, sans-serif;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      /* The Result panel paints a backdrop per theme; the widget is styled by the tokens below. */
+      .result {
+        padding: 1.25rem;
+      }
+      .result[data-skin="win95"] {
+        background: #c3c7cb;
+        color-scheme: light;
+      }
+      .result[data-skin="brutalist"] {
+        background: #f4f0e6;
+        color-scheme: light;
+      }
+
+      /* Windows 95: the tokens the blog sets on .gc-root. Through ::part(gc-root) they land on the
+         widget root itself, which is what wins over anything the forum's CSS sets there. */
+      .result[data-skin="win95"] discourse-comments::part(gc-root) {
+        --gc-font: "MS Sans Serif", "Segoe UI", sans-serif;
+        --gc-fg: #000;
+        --gc-fg-muted: #4a4a4a;
+        --gc-bg: #fff;
+        --gc-bg-subtle: #c3c7cb;
+        --gc-border: #868a8e;
+        --gc-accent: #000e7a;
+        --gc-accent-fg: #fff;
+        --gc-danger: #a00;
+        --gc-radius: 0;
+        --gc-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff;
+        color-scheme: light;
+      }
+
+      /* Neo-brutalist. */
+      .result[data-skin="brutalist"] discourse-comments::part(gc-root) {
+        --gc-font: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+        --gc-fg: #111;
+        --gc-fg-muted: #444;
+        --gc-bg: #fff;
+        --gc-bg-subtle: #f4f0e6;
+        --gc-border: #111;
+        --gc-accent: #86b6ff;
+        --gc-accent-fg: #111;
+        --gc-danger: #c00;
+        --gc-radius: 0;
+        --gc-shadow: 3px 3px 0 0 #111;
+        color-scheme: light;
+      }
+      .result[data-skin="brutalist"] discourse-comments::part(gc-button) {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
       }
     </style>
     <script type="module" src="https://cdn.jsdelivr.net/npm/g-comments@0.2.1/dist/element.js"></script>
   </head>
   <body>
-    <h1>Comments, styled by the forum</h1>
-    <p>
-      This page has no CSS for the comments below. Their colours, fonts and any extra rules come
-      from the forum at <a href="https://forum.grubba.dev">forum.grubba.dev</a>: change its colour
-      palette or its theme's Embedded CSS and this page follows, no deploy needed. The
-      <a href="/blog/1433307">blog post</a> shows the same conversation painted in the site's own
-      Windows 95 or brutalist skin.
-    </p>
-    <p>All a page needs:</p>
-    <pre><code>&lt;script type="module" src="https://cdn.jsdelivr.net/npm/g-comments/dist/element.js"&gt;&lt;/script&gt;
-&lt;discourse-comments forum="https://forum.grubba.dev" theme="forum"&gt;&lt;/discourse-comments&gt;</code></pre>
-    <p>
-      Written like that, the element sends the page's own address (its canonical link, or the
-      URL in the address bar) to the forum, which tidies it up, looks it up among the pages it
-      already knows, and creates an unlisted topic for it on the first visit. The topic appears on
-      the forum once someone comments. Nothing on the site keeps track of topics.
-    </p>
-    <p>
-      This page is the exception: it names the blog post's address so there is something to read,
-      which is also how two pages can share one conversation.
-    </p>
-    <pre><code>&lt;discourse-comments
-  forum="https://forum.grubba.dev"
-  theme="forum"
-  url="https://grubba.dev/blog/1433307"
-&gt;&lt;/discourse-comments&gt;</code></pre>
-    <p>
-      Same thread as the <a href="/blog/1433307">blog post</a>:
-      <discourse-comment-count forum="https://forum.grubba.dev" url="https://grubba.dev/blog/1433307"></discourse-comment-count>
-      so far.
+    <h1>Comments, three ways</h1>
+    <p class="lead">
+      One conversation on <a href="https://forum.grubba.dev">forum.grubba.dev</a>, one component,
+      three looks. Pick a theme to see the result and the code that produces it.
     </p>
 
-    <discourse-comments
-      forum="https://forum.grubba.dev"
-      theme="forum"
-      url="https://grubba.dev/blog/1433307"
-    ></discourse-comments>
+    <div class="example">
+      <div class="bar">
+        <div class="switch" role="radiogroup" aria-label="Theme">
+          <button type="button" role="radio" aria-checked="true" data-skin="forum"><span>Forum</span></button>
+          <button type="button" role="radio" aria-checked="false" data-skin="win95"><span>Windows 95</span></button>
+          <button type="button" role="radio" aria-checked="false" data-skin="brutalist"><span>Neo-brutalist</span></button>
+        </div>
+        <div class="tabs" role="tablist" aria-label="View">
+          <button type="button" role="tab" id="tab-result" aria-selected="true" aria-controls="panel-result">Result</button>
+          <button type="button" role="tab" id="tab-code" aria-selected="false" aria-controls="panel-code">Code</button>
+        </div>
+      </div>
+      <div id="panel-result" class="result" role="tabpanel" aria-labelledby="tab-result" data-skin="forum">
+        <discourse-comments
+          forum="https://forum.grubba.dev"
+          theme="forum"
+          url="https://grubba.dev/blog/1433307"
+        ></discourse-comments>
+      </div>
+      <div id="panel-code" role="tabpanel" aria-labelledby="tab-code" hidden>
+        <h3>HTML</h3>
+        <pre><code id="code-html"></code></pre>
+        <h3>React</h3>
+        <pre><code id="code-react"></code></pre>
+      </div>
+    </div>
 
-    <h2>Other ways to use it</h2>
+    <h2>How the forum knows the page</h2>
     <p>
-      The same package ships a React build, which is what the blog uses. One provider for the
-      forum, then a component wherever comments belong; the stylesheet is optional.
+      Left alone, the element sends the page's own address (its canonical link, or the URL in the
+      address bar) to the forum. The forum tidies it up, looks it up among the pages it already
+      knows, and creates an unlisted topic for it on the first visit; the topic appears on the
+      forum once someone comments. Nothing on the site keeps track of topics. This page adds
+      <code>url="https://grubba.dev/blog/1433307"</code> so it shows the
+      <a href="/blog/1433307">blog post</a>'s thread, which is also how two pages share one
+      conversation. An <code>identifier</code> attribute gives a page a stable key of your own
+      instead.
     </p>
-    <pre><code>npm install g-comments</code></pre>
-    <pre><code>import { DiscourseComments, Comments, CommentCount } from "g-comments/react";
-import "g-comments/styles.css";
 
-&lt;DiscourseComments forum="https://forum.grubba.dev" theme="forum"&gt;
-  &lt;Comments /&gt;                                    {/* this page's own address */}
-  &lt;Comments url="https://grubba.dev/blog/1433307" /&gt; {/* a chosen thread */}
-  &lt;CommentCount url="https://grubba.dev/blog/1433307" /&gt;
-&lt;/DiscourseComments&gt;</code></pre>
-
+    <h2>Who styles what</h2>
     <p>
-      To paint the comments yourself, set the <code>--gc-*</code> tokens in your CSS. Whatever the
-      site sets wins over the forum's theme, which wins over the defaults, so a site can take
-      the forum's look and override just a few things, as the blog's Windows 95 skin does.
+      <strong>Forum</strong> is the bare component with <code>theme="forum"</code>: its colours
+      and fonts come from the forum's theme, and whatever the forum admin writes in the theme's
+      Embedded CSS applies too (the accent bar on each comment comes from there). The other two
+      keep <code>theme="forum"</code> and set the site's <code>--gc-*</code> tokens on top. The
+      site's own tokens and CSS win over the forum's, which win over the defaults, so a site can
+      take the forum's look and change as much or as little as it likes. With the custom element,
+      set the tokens on <code>::part(gc-root)</code>, the widget root itself; in React, on
+      <code>.gc-root</code>.
     </p>
-    <pre><code>.gc-root {
-  --gc-font: "MS Sans Serif", sans-serif;
-  --gc-accent: #000e7a;
-  --gc-radius: 0;
-}</code></pre>
 
-    <p>
-      For a layout of your own, the hooks give you the data and the actions and the primitives
-      give you the pieces:
-    </p>
+    <h2>Headless</h2>
+    <p>For a layout of your own, the hooks give you the data and actions, the primitives the pieces:</p>
     <pre><code>import { Comments, useCommenter, useThread } from "g-comments/react";
 
 const { thread, snapshot } = useThread({ url, sort: "newest" });
@@ -114,11 +236,94 @@ const me = useCommenter();
   &lt;/Comments.List&gt;
 &lt;/Comments.Root&gt;</code></pre>
 
-    <p>
-      The custom element takes the same options as attributes: <code>identifier</code> for a
-      stable key of your own, <code>sort</code>, <code>sign-in="inline|on-submit|manual"</code>,
-      <code>read-only</code>, <code>theme="auto|light|dark|inherit|forum"</code>, and
-      <code>&lt;discourse-comment-count url="…"&gt;</code> for lists of posts.
-    </p>
+    <script>
+      const SCRIPT = '<script type="module" src="https://cdn.jsdelivr.net/npm/g-comments/dist/element.js"><\/script>';
+      const ELEMENT = '<discourse-comments forum="https://forum.grubba.dev" theme="forum"></discourse-comments>';
+      const PROVIDER = [
+        'import { DiscourseComments, Comments } from "g-comments/react";',
+        'import "g-comments/styles.css";',
+        "",
+        '<DiscourseComments forum="https://forum.grubba.dev" theme="forum">',
+        "  <Comments />",
+        "</DiscourseComments>",
+      ].join("\n");
+
+      const tokens = (lines) => lines.map((line) => `  ${line}`).join("\n");
+      const WIN95 = [
+        '--gc-font: "MS Sans Serif", "Segoe UI", sans-serif;',
+        "--gc-fg: #000;",
+        "--gc-fg-muted: #4a4a4a;",
+        "--gc-bg: #fff;",
+        "--gc-bg-subtle: #c3c7cb;",
+        "--gc-border: #868a8e;",
+        "--gc-accent: #000e7a;",
+        "--gc-accent-fg: #fff;",
+        "--gc-danger: #a00;",
+        "--gc-radius: 0;",
+        "--gc-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff;",
+      ];
+      const BRUTALIST = [
+        '--gc-font: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;',
+        "--gc-fg: #111;",
+        "--gc-fg-muted: #444;",
+        "--gc-bg: #fff;",
+        "--gc-bg-subtle: #f4f0e6;",
+        "--gc-border: #111;",
+        "--gc-accent: #86b6ff;",
+        "--gc-accent-fg: #111;",
+        "--gc-danger: #c00;",
+        "--gc-radius: 0;",
+        "--gc-shadow: 3px 3px 0 0 #111;",
+      ];
+
+      const SNIPPETS = {
+        forum: {
+          html: `${SCRIPT}\n${ELEMENT}`,
+          react: PROVIDER,
+        },
+        win95: {
+          html: `${SCRIPT}\n\n<style>\n  discourse-comments::part(gc-root) {\n${tokens(WIN95).replace(/^/gm, "  ")}\n  }\n</style>\n\n${ELEMENT}`,
+          react: `${PROVIDER}\n\n/* comments.css, loaded after g-comments/styles.css */\n.gc-root {\n${tokens(WIN95)}\n}`,
+        },
+        brutalist: {
+          html: `${SCRIPT}\n\n<style>\n  discourse-comments::part(gc-root) {\n${tokens(BRUTALIST).replace(/^/gm, "  ")}\n  }\n  discourse-comments::part(gc-button) {\n    font-family: "JetBrains Mono", ui-monospace, monospace;\n  }\n</style>\n\n${ELEMENT}`,
+          react: `${PROVIDER}\n\n/* comments.css, loaded after g-comments/styles.css */\n.gc-root {\n${tokens(BRUTALIST)}\n}\n.gc-root button {\n  font-family: "JetBrains Mono", ui-monospace, monospace;\n}`,
+        },
+      };
+
+      const result = document.getElementById("panel-result");
+      const codeHtml = document.getElementById("code-html");
+      const codeReact = document.getElementById("code-react");
+      const radios = [...document.querySelectorAll('.switch [role="radio"]')];
+      const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
+
+      function pick(skin) {
+        for (const radio of radios) {
+          radio.setAttribute("aria-checked", String(radio.dataset.skin === skin));
+        }
+        result.dataset.skin = skin;
+        codeHtml.textContent = SNIPPETS[skin].html;
+        codeReact.textContent = SNIPPETS[skin].react;
+        history.replaceState(null, "", `#${skin}`);
+      }
+
+      function show(tab) {
+        for (const other of tabs) {
+          const on = other === tab;
+          other.setAttribute("aria-selected", String(on));
+          document.getElementById(other.getAttribute("aria-controls")).hidden = !on;
+        }
+      }
+
+      for (const radio of radios) {
+        radio.addEventListener("click", () => pick(radio.dataset.skin));
+      }
+      for (const tab of tabs) {
+        tab.addEventListener("click", () => show(tab));
+      }
+
+      const fromHash = location.hash.slice(1);
+      pick(fromHash in SNIPPETS ? fromHash : "forum");
+    </script>
   </body>
 </html>
