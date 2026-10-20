@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Comments, styled by the forum</title>
+    <style>
+      /* Nothing on this page styles the comments: the forum's theme is all they get. */
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        max-width: 44rem;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        font-family: Georgia, "Times New Roman", serif;
+        line-height: 1.5;
+      }
+      pre {
+        padding: 0.75rem 1rem;
+        overflow: auto;
+        font-size: 0.85rem;
+        background: color-mix(in srgb, currentColor 8%, transparent);
+      }
+    </style>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/g-comments@0.2.1/dist/element.js"></script>
+  </head>
+  <body>
+    <h1>Comments, styled by the forum</h1>
+    <p>
+      This page has no CSS for the comments below. Their colours, fonts and any extra rules come
+      from the forum at <a href="https://forum.grubba.dev">forum.grubba.dev</a>: change its colour
+      palette or its theme's Embedded CSS and this page follows, no deploy needed. The
+      <a href="/blog/1433307">blog post</a> shows the same conversation painted in the site's own
+      Windows 95 or brutalist skin instead.
+    </p>
+    <p>All it takes:</p>
+    <pre><code>&lt;script type="module" src="https://cdn.jsdelivr.net/npm/g-comments/dist/element.js"&gt;&lt;/script&gt;
+&lt;discourse-comments forum="https://forum.grubba.dev" theme="forum"&gt;&lt;/discourse-comments&gt;</code></pre>
+    <p>
+      Left alone, the element uses the page's own URL as the thread. This one points at the blog
+      post's thread so there is something to read:
+      <discourse-comment-count forum="https://forum.grubba.dev" url="https://grubba.dev/blog/1433307"></discourse-comment-count>
+      so far.
+    </p>
+
+    <discourse-comments
+      forum="https://forum.grubba.dev"
+      theme="forum"
+      url="https://grubba.dev/blog/1433307"
+    ></discourse-comments>
+  </body>
+</html>
