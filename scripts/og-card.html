@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<!--
+  The link-preview picture of a file on the desktop, 1200x630, drawn the way the site draws it.
+  scripts/og-images.mjs opens it as og-card.html?file=about&theme=win95 and takes a screenshot.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Link preview</title>
+  <style>
+    @font-face {
+      font-family: 'MS Sans Serif';
+      src: url(../src/assets/win95/font/MS-Sans-Serif.woff2) format('woff2');
+    }
+
+    @font-face {
+      font-family: 'Bricolage Grotesque Variable';
+      font-weight: 200 800;
+      src: url(../node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2) format('woff2-variations');
+    }
+
+    @font-face {
+      font-family: 'JetBrains Mono Variable';
+      font-weight: 100 800;
+      src: url(../node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2) format('woff2-variations');
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    html,
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+    }
+
+    img {
+      image-rendering: pixelated;
+    }
+
+    .window {
+      position: absolute;
+      top: 44px;
+      left: 72px;
+      display: flex;
+      flex-direction: column;
+      width: 1056px;
+      height: 482px;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .title span {
+      flex: 1;
+    }
+
+    .title b {
+      display: grid;
+      place-items: center;
+    }
+
+    .page {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .heading {
+      display: flex;
+      align-items: center;
+    }
+
+    .site {
+      margin-top: auto;
+    }
+
+    .taskbar {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .taskbar > * {
+      display: flex;
+      align-items: center;
+    }
+
+    /* ---------- Windows 95 ---------- */
+
+    [data-theme='win95'] {
+      --bevel-out: inset -2px -2px 0 #000, inset 2px 2px 0 #e6e6e6, inset -4px -4px 0 #868a8e, inset 4px 4px 0 #fff;
+      --bevel-in: inset 2px 2px 0 #868a8e, inset -2px -2px 0 #fff, inset 4px 4px 0 #000, inset -4px -4px 0 #d2d2d2;
+      background: url(../public/assets/bg-hg.jpeg) center 70% / cover;
+      font-family: 'MS Sans Serif', sans-serif;
+      -webkit-font-smoothing: none;
+    }
+
+    [data-theme='win95'] .window {
+      padding: 6px;
+      background: #c3c7cb;
+      box-shadow: var(--bevel-out);
+    }
+
+    [data-theme='win95'] .title {
+      height: 46px;
+      padding: 0 6px 0 10px;
+      background: #000e7a;
+      color: #fefefe;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    [data-theme='win95'] .title img {
+      width: 32px;
+    }
+
+    [data-theme='win95'] .title b {
+      width: 40px;
+      height: 34px;
+      background: #c3c7cb;
+      box-shadow: var(--bevel-out);
+      color: #000;
+      font-size: 22px;
+    }
+
+    [data-theme='win95'] .menu {
+      padding: 6px 14px;
+      font-size: 24px;
+      word-spacing: 18px;
+    }
+
+    [data-theme='win95'] .page {
+      padding: 40px 52px 32px;
+      background: #fff;
+      box-shadow: var(--bevel-in);
+    }
+
+    [data-theme='win95'] .heading img {
+      width: 96px;
+      margin-right: 32px;
+    }
+
+    [data-theme='win95'] h1 {
+      font-size: 92px;
+      line-height: 1.1;
+    }
+
+    [data-theme='win95'] p {
+      margin-top: 24px;
+      font-size: 40px;
+    }
+
+    [data-theme='win95'] .site {
+      color: #000e7a;
+      font-size: 32px;
+      text-decoration: underline;
+    }
+
+    [data-theme='win95'] .taskbar {
+      gap: 8px;
+      height: 58px;
+      padding: 0 6px;
+      background: #c3c7cb;
+      box-shadow: inset 0 2px 0 #e6e6e6, inset 0 4px 0 #fff;
+      font-size: 24px;
+    }
+
+    [data-theme='win95'] .taskbar > * {
+      gap: 8px;
+      height: 44px;
+      margin-top: 4px;
+      padding: 0 12px;
+      box-shadow: var(--bevel-out);
+    }
+
+    [data-theme='win95'] .taskbar img {
+      width: 32px;
+    }
+
+    [data-theme='win95'] .taskbar .start {
+      font-weight: bold;
+    }
+
+    [data-theme='win95'] .taskbar .open {
+      width: 400px;
+      background: #e6e6e6;
+      box-shadow: var(--bevel-in);
+    }
+
+    /* ---------- Neo-brutalist ---------- */
+
+    [data-theme='brutalist'] {
+      --ink: #111111;
+      background: #f4f0e6
+        radial-gradient(color-mix(in srgb, var(--ink) 16%, transparent) 2px, transparent 3px) 0 0 / 40px 40px;
+      color: var(--ink);
+      font-family: 'Bricolage Grotesque Variable', sans-serif;
+    }
+
+    [data-file='about'] { --accent: #ffd23f; }
+    [data-file='resume'] { --accent: #ff90b3; }
+    [data-file='contact'] { --accent: #6fe3a1; }
+    [data-file='blog'] { --accent: #86b6ff; }
+
+    [data-theme='brutalist'] .window {
+      top: 36px;
+      height: 476px;
+      border: 5px solid var(--ink);
+      background: #fff;
+      box-shadow: 14px 14px 0 0 var(--ink);
+    }
+
+    [data-theme='brutalist'] .title {
+      height: 64px;
+      padding: 0 12px 0 18px;
+      border-bottom: 5px solid var(--ink);
+      background: var(--accent);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    [data-theme='brutalist'] .title img {
+      width: 32px;
+    }
+
+    [data-theme='brutalist'] .title b {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--ink);
+      background: #fff;
+      box-shadow: 3px 3px 0 0 var(--ink);
+      font-size: 20px;
+    }
+
+    [data-theme='brutalist'] .menu {
+      padding: 8px 18px;
+      border-bottom: 5px solid var(--ink);
+      font: 600 22px / 1.5 'JetBrains Mono Variable', monospace;
+      word-spacing: 16px;
+    }
+
+    [data-theme='brutalist'] .page {
+      padding: 36px 48px 30px;
+    }
+
+    [data-theme='brutalist'] .heading img {
+      width: 96px;
+      margin-right: 30px;
+    }
+
+    [data-theme='brutalist'] h1 {
+      font-size: 104px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.035em;
+    }
+
+    [data-theme='brutalist'] p {
+      margin-top: 22px;
+      font-size: 40px;
+      font-weight: 500;
+    }
+
+    [data-theme='brutalist'] .site {
+      align-self: flex-start;
+      padding: 4px 14px;
+      border: 3px solid var(--ink);
+      background: var(--accent);
+      box-shadow: 4px 4px 0 0 var(--ink);
+      font: 700 28px / 1.4 'JetBrains Mono Variable', monospace;
+    }
+
+    [data-theme='brutalist'] .taskbar {
+      gap: 12px;
+      height: 70px;
+      padding: 0 12px;
+      border-top: 5px solid var(--ink);
+      background: #fff;
+      font: 700 22px / 1 'JetBrains Mono Variable', monospace;
+    }
+
+    [data-theme='brutalist'] .taskbar > * {
+      gap: 10px;
+      height: 46px;
+      padding: 0 14px;
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0 0 var(--ink);
+    }
+
+    [data-theme='brutalist'] .taskbar img {
+      width: 28px;
+    }
+
+    [data-theme='brutalist'] .taskbar .open {
+      width: 380px;
+      background: var(--accent);
+      transform: translate(3px, 3px);
+      box-shadow: none;
+    }
+  </style>
+</head>
+<body>
+<div class="window">
+  <div class="title">
+    <img src="../node_modules/@react95/icons/png/Notepad1_16x16_4.png" alt=""/>
+    <span id="title"></span>
+    <b>?</b>
+    <b>×</b>
+  </div>
+  <div class="menu">File Edit</div>
+  <div class="page">
+    <div class="heading">
+      <img id="icon" alt=""/>
+      <h1 id="heading"></h1>
+    </div>
+    <p>Gabriel Grubba · Software engineer at Discourse</p>
+    <div class="site">grubba.dev</div>
+  </div>
+</div>
+<div class="taskbar">
+  <div class="start"><img src="../node_modules/@react95/icons/png/Logo_32x32_4.png" alt=""/>Start</div>
+  <div class="open"><img src="../node_modules/@react95/icons/png/Notepad1_16x16_4.png" alt=""/><span id="task"></span></div>
+</div>
+<script>
+  // the files of the desktop: their name, icon and what the page says in big letters
+  const files = {
+    about: { name: 'About.txt', icon: 'InfoBubble_32x32_4', heading: 'Gabriel Grubba' },
+    resume: { name: 'Resume.txt', icon: 'Notepad2_32x32_4', heading: 'Resume' },
+    contact: { name: 'Contact.txt', icon: 'Inetcfg2301_32x32_4', heading: 'Contact' },
+    blog: { name: 'Blog.txt', icon: 'Progman1_32x32_4', heading: 'Blog' },
+  };
+
+  const params = new URLSearchParams(location.search);
+  const id = params.get('file') ?? 'about';
+  const file = files[id];
+
+  document.body.dataset.theme = params.get('theme') ?? 'win95';
+  document.body.dataset.file = id;
+  document.getElementById('title').textContent = `Notepad - ${file.name}`;
+  document.getElementById('task').textContent = `Notepad - ${file.name}`;
+  document.getElementById('icon').src = `../node_modules/@react95/icons/png/${file.icon}.png`;
+  document.getElementById('heading').textContent = file.heading;
+
+  // the About card already carries the name in big letters
+  if (id === 'about') document.querySelector('p').textContent = 'Software engineer at Discourse';
+</script>
+</body>
+</html>

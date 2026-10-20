@@ -40,8 +40,12 @@
       "destination": "/deactivated.html"
     },
     {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
       "source": "/(.*)",
-      "destination": "/site.html"
+      "destination": "/api/page?path=/$1"
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@react95/core";
 import styled from "styled-components";
@@ -7,6 +7,7 @@ import { postQuery, postsQuery } from "../../services/devto";
 import { Comments } from "g-comments/react";
 import { postCommentsUrl } from "../../services/comments";
 import { sanitizePostHtml } from "../../services/sanitizePost";
+import { fileTitle, postTitle } from "../../services/seo";
 
 const Body = styled.article`
   overflow-wrap: anywhere;
@@ -67,6 +68,10 @@ export default function BlogPost({ id, username, blog, closePost }) {
       queryClient.getQueryData(postsQuery(username).queryKey)?.find((listed) => String(listed.id) === id),
   });
   const body = useMemo(() => post?.body_html ? sanitizePostHtml(post.body_html) : null, [post]);
+
+  useEffect(() => {
+    document.title = post ? postTitle(post) : fileTitle('blog');
+  }, [post]);
 
   const back = <Button className="pointer" onClick={closePost}>&lt; Back to posts</Button>
 

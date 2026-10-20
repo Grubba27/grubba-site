@@ -19,6 +19,11 @@ export default defineConfig([
     },
   },
   {
+    // what runs in Node: the functions, the scripts and the config
+    files: ['api/**', 'scripts/**', 'vite.config.js'],
+    languageOptions: { globals: globals.node },
+  },
+  {
     files: ['**/*.test.{js,jsx}', 'src/setupTests.js'],
     languageOptions: { globals: globals.vitest },
   },

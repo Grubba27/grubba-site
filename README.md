@@ -37,6 +37,24 @@ Each theme has its icons in `public/icons`, and the tab changes to them with the
 
 ## Deployment
 
-Vercel builds and deploys every push to `master`. `vercel.json` sets the framework and sends every path to `site.html`, the desktop's page, since the open file and blog post live in the URL (`/resume`, `/blog/123`, ...). There is no `index.html` on purpose: Vercel serves a file at `/` before it looks at the rewrites, which would keep the host rule below from ever running for the root of the maker's domain. The dev and preview servers follow the same rules, see `vite.config.js`.
+Vercel builds and deploys every push to `master`. `vercel.json` sets the framework and sends every path to the desktop's page, since the open file and blog post live in the URL (`/resume`, `/blog/123`, ...). That page is answered by a function, `api/page.js`, so it can carry the address's own tags (see below). There is no `index.html` on purpose: Vercel serves a file at `/` before it looks at the rewrites, which would keep the host rule below from ever running for the root of the maker's domain. The dev and preview servers follow the same rules, see `vite.config.js`.
 
 `deactivated.grubba.dev` is the same deployment, with the domain added to the Vercel project (Settings, Domains). `vercel.json` sends that host, and the `/deactivated` path on any other, to `deactivated.html`: a second page with its own title, description and link-preview image (`public/deactivated-og.png`), since link previews never run the skin switch. The skin switch in `src/skins.js` still picks the maker for that host and path when the desktop's page is what got served.
+
+## Link previews and search engines
+
+Link previews (Discourse oneboxes, Slack, X, iMessage, ...) and most crawlers read the title, description and picture from the HTML and never run the desktop's script, so every address gets its own tags on the server:
+
+- `src/services/seo.js` decides them: the title, description, canonical URL (always on `grubba.dev`), Open Graph and Twitter tags and structured data of each file, and of each post from dev.to's API (its title, description, cover, reading time and date). Only posts by the blog's author get a page; any other id, or an address that isn't a file, answers 404.
+- `api/page.js` is the function `vercel.json` sends the desktop's addresses to. It reads `site.html` back from the deployment and puts the tags in its `page-meta` block. Vercel's CDN keeps the result for an hour (a minute when dev.to didn't answer, in which case the post still opens with the blog's preview).
+- `api/sitemap.js` answers `/sitemap.xml` with the files and every post; `robots.txt` points to it.
+- The dev server fills in the same tags, and the preview server (`npm run preview`) goes through `api/page.js` itself, so `curl -A Bot http://localhost:4173/blog/<id>` shows what a link preview gets.
+- The desktop sets the same title on the tab as files and posts open.
+
+The pictures of the files are in `public/og`, one per file and theme, drawn from `scripts/og-card.html`. After changing the card (or the name or job on it), draw them again with Chrome installed:
+
+```shell
+node scripts/og-images.mjs
+```
+
+Posts use their dev.to cover, and the Blog picture when they have none.
