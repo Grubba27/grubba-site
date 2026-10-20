@@ -3,6 +3,9 @@ import { createGlobalStyle } from "styled-components";
 import Desktop from "./Desktop";
 import Taskbar from "./Taskbar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { DiscourseComments } from "g-comments/react";
+import "g-comments/styles.css";
+import { FORUM_URL } from "../services/comments";
 
 const BodyFontSizeOverride = createGlobalStyle`
   body {
@@ -17,13 +20,15 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={ queryClient }>
     <Context.Provider value={ dataService }>
-      <BodyFontSizeOverride/>
+      {/* theme="inherit": the comments pick up the skin's colours through the --gc-* tokens */}
+      <DiscourseComments forum={ FORUM_URL } theme="inherit">
+        <BodyFontSizeOverride/>
 
-      {/* comes first: the taskbar only lists the windows that open after it has mounted */}
-      <Taskbar/>
-      <Desktop/>
+        {/* comes first: the taskbar only lists the windows that open after it has mounted */}
+        <Taskbar/>
+        <Desktop/>
+      </DiscourseComments>
     </Context.Provider>
   </QueryClientProvider>
-
 );
 export default App;

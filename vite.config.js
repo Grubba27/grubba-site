@@ -40,6 +40,9 @@ export default defineConfig({
   plugins: [react(), pages()],
   appType: 'mpa',
   input: PAGES,
+  // g-comments is linked from a sibling checkout while it is unpublished
+  resolve: { dedupe: ['react', 'react-dom'] },
+  server: { fs: { allow: ['.', '../../discourse-comments-sdk'] } },
   build: {
     rolldownOptions: {
       treeshake: {

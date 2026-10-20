@@ -110,3 +110,22 @@ html, * {
 .pointer, .pointer *, :any-link {
   cursor: url('./assets/win95/cursors/HandPointer.png'), pointer;
 }
+
+/* ---------- comments (g-comments) painted like the rest of the Windows 95 desktop ---------- */
+.post-comments { margin-top: 1.5rem; }
+.post-comments .gc-root {
+  --gc-font: 'MS Sans Serif', 'Segoe UI', sans-serif;
+  --gc-fg: var(--r95-color-materialText, #000);
+  --gc-fg-muted: #4a4a4a;
+  --gc-bg: var(--r95-color-inputBackground, #fff);
+  --gc-bg-subtle: var(--r95-color-material, #c3c7cb);
+  --gc-border: var(--r95-color-borderDark, #868a8e);
+  --gc-accent: var(--r95-color-headerBackground, #000e7a);
+  --gc-accent-fg: #fff;
+  --gc-danger: #a00;
+  --gc-radius: 0;
+  --gc-shadow: var(--r95-shadow-out, inset -1px -1px #0a0a0a, inset 1px 1px #fff);
+}
+.blog-post-comments { display: block; margin: 0.25rem 0 0.75rem; color: #4a4a4a; }
+/* the universal MS Sans Serif rule would restyle syntax-highlight spans inside code */
+.gc-root :is(pre, code) * { font-family: inherit; }
