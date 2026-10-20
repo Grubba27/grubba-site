@@ -129,3 +129,14 @@ html, * {
 .blog-post-comments { display: block; margin: 0.25rem 0 0.75rem; color: #4a4a4a; }
 /* the universal MS Sans Serif rule would restyle syntax-highlight spans inside code */
 .gc-root :is(pre, code) * { font-family: inherit; }
+
+/* ---------- the blog reads better wide: on desktop its Notepad spans most of the screen, centred ---------- */
+@media (min-width: 1024px) {
+  .window[data-file='blog'] {
+    /* grows to the left from where it already sits, so the Explorer stays in view */
+    --notepad-width: min(64rem, 62vw);
+    --notepad-left: calc(100vw - var(--notepad-width) - 4vw);
+    --notepad-top: 8%;
+    --notepad-max-height: 74vh;
+  }
+}

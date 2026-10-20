@@ -670,3 +670,14 @@
 :root[data-theme='brutalist'] .gc-root :is(pre, code) * {
   font-family: var(--bx-mono);
 }
+
+/* ---------- the blog reads better wide: on desktop its Notepad spans most of the screen, centred ---------- */
+@media (min-width: 1024px) {
+  :root[data-theme='brutalist'] .window[data-file='blog'] {
+    /* grows to the left from where it already sits, so the Explorer stays in view */
+    --notepad-width: min(64rem, 62vw);
+    --notepad-left: calc(100vw - var(--notepad-width) - 4vw);
+    --notepad-top: 6%;
+    --notepad-max-height: calc(88vh - 13.5rem);
+  }
+}

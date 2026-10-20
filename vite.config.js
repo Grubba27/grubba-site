@@ -40,9 +40,13 @@ export default defineConfig({
   plugins: [react(), pages()],
   appType: 'mpa',
   input: PAGES,
-  // g-comments is linked from a sibling checkout while it is unpublished
+  // g-comments is linked from a sibling checkout while it is unpublished. Its rebuilds must not
+  // hot-reload open tabs: a hot update re-runs the SDK without disposing the previous client.
   resolve: { dedupe: ['react', 'react-dom'] },
-  server: { fs: { allow: ['.', '../../discourse-comments-sdk'] } },
+  server: {
+    fs: { allow: ['.', '../../discourse-comments-sdk'] },
+    watch: { ignored: ['**/discourse-comments-sdk/**'] },
+  },
   build: {
     rolldownOptions: {
       treeshake: {

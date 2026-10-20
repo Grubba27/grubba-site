@@ -16,8 +16,9 @@ function Notepad({ closeNotepad, selectedItem, isMobile }) {
       data-file={ selectedItem.id }
       buttons={ [{ value: "Close", onClick: closeNotepad }] }
       style={ {
-        left: isMobile ? '5%' : '50%',
-        top: isMobile ? '35%' : '15%',
+        // themes and files may size and place the window through these variables
+        left: isMobile ? '5%' : 'var(--notepad-left, 50%)',
+        top: isMobile ? '35%' : 'var(--notepad-top, 15%)',
         width: isMobile ? '90%' : 'var(--notepad-width, 450px)',
       } }
       menu={ [
