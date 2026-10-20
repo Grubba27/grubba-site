@@ -4,6 +4,8 @@ import { Button } from "@react95/core";
 import styled from "styled-components";
 import DefragSpinner from "./DefragSpinner";
 import { postQuery, postsQuery } from "../../services/devto";
+import { Comments } from "g-comments/react";
+import { postCommentsUrl } from "../../services/comments";
 import { sanitizePostHtml } from "../../services/sanitizePost";
 
 const Body = styled.article`
@@ -101,6 +103,9 @@ export default function BlogPost({ id, username, blog, closePost }) {
           <hr />
           <p>{readMore}</p>
           {back}
+          <section className="post-comments" aria-label="Comments">
+            <Comments url={postCommentsUrl(id)} title={post.title} />
+          </section>
         </>
       )}
     </>

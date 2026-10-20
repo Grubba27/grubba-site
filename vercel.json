@@ -4,7 +4,12 @@
   "redirects": [
     {
       "source": "/favicon.ico",
-      "has": [{ "type": "host", "value": "brutalist.grubba.dev" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "brutalist.grubba.dev"
+        }
+      ],
       "destination": "/icons/brutalist.png",
       "permanent": false
     }
@@ -12,10 +17,31 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "deactivated.grubba.dev" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "forum.grubba.dev"
+        }
+      ],
+      "destination": "https://stopping-treating-retain-thee.trycloudflare.com/$1"
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "deactivated.grubba.dev"
+        }
+      ],
       "destination": "/deactivated.html"
     },
-    { "source": "/deactivated", "destination": "/deactivated.html" },
-    { "source": "/(.*)", "destination": "/site.html" }
+    {
+      "source": "/deactivated",
+      "destination": "/deactivated.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/site.html"
+    }
   ]
 }

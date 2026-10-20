@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Button, Checkbox } from "@react95/core";
 import styled from "styled-components";
 import DefragSpinner from "./DefragSpinner";
+import { CommentCount } from "g-comments/react";
+import { postCommentsUrl } from "../../services/comments";
 import { postsQuery } from "../../services/devto";
 
 // the checkbox is sized for one line of 12px text, and this label can wrap
@@ -128,6 +130,9 @@ export default function BlogList({ username, blog, openPost, filters, setFilters
                   {post.title}
                 </a>
               </h3>
+              <small className="blog-post-comments">
+                <CommentCount url={postCommentsUrl(post.id)} />
+              </small>
               <p>
                 {post.readable_publish_date} - Reading time: {post.reading_time_minutes} minutes.
                 <br />

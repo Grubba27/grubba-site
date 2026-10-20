@@ -108,7 +108,8 @@
 
 /* ---------- buttons: a hard shadow that gives way when pressed ---------- */
 
-:root[data-theme='brutalist'] button {
+/* the comments widget paints its own buttons through the --gc-* tokens */
+:root[data-theme='brutalist'] button:not(.gc-root *) {
   padding: 7px 14px;
   border: var(--bx-border-thin);
   border-radius: 0;
@@ -122,13 +123,13 @@
 }
 
 @media (hover: hover) {
-  :root[data-theme='brutalist'] button:hover {
+  :root[data-theme='brutalist'] button:not(.gc-root *):hover {
     transform: translate(1px, 1px);
     box-shadow: 2px 2px 0 0 var(--bx-ink);
   }
 }
 
-:root[data-theme='brutalist'] button:active {
+:root[data-theme='brutalist'] button:not(.gc-root *):active {
   transform: translate(3px, 3px);
   box-shadow: 0 0 0 0 var(--bx-ink);
 }
@@ -644,5 +645,39 @@
 @media (prefers-reduced-motion: reduce) {
   :root[data-theme='brutalist'] * {
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- comments (g-comments) in the brutalist skin ---------- */
+:root[data-theme='brutalist'] .post-comments .gc-root {
+  --gc-font: var(--bx-sans);
+  --gc-fg: var(--bx-ink);
+  --gc-fg-muted: #444;
+  --gc-bg: var(--bx-paper);
+  --gc-bg-subtle: var(--bx-ground);
+  --gc-border: var(--bx-ink);
+  --gc-accent: var(--bx-accent);
+  --gc-accent-fg: var(--bx-ink);
+  --gc-danger: #c00;
+  --gc-radius: 0;
+  --gc-shadow: var(--bx-shadow-sm);
+}
+:root[data-theme='brutalist'] .post-comments .gc-root button {
+  font-family: var(--bx-mono);
+}
+/* code keeps its monospace face despite the theme's universal font rule */
+:root[data-theme='brutalist'] .gc-root :is(pre, code),
+:root[data-theme='brutalist'] .gc-root :is(pre, code) * {
+  font-family: var(--bx-mono);
+}
+
+/* ---------- the blog reads better wide: on desktop its Notepad spans most of the screen, centred ---------- */
+@media (min-width: 1024px) {
+  :root[data-theme='brutalist'] .window[data-file='blog'] {
+    /* grows to the left from where it already sits, so the Explorer stays in view */
+    --notepad-width: min(64rem, 62vw);
+    --notepad-left: calc(100vw - var(--notepad-width) - 4vw);
+    --notepad-top: 6%;
+    --notepad-max-height: calc(88vh - 13.5rem);
   }
 }
